@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--
+  # 내가 푼 방법과, 해석본이 다른점
+    * arr 영역 유효성검사
+    * 봉우리 판단 방법
+      - 나는 상하좌우 4방향 모두 확인해야 하지만
+      - 해석본은 하나만 낮아도 break로 멈춰서 순회를 덜하게 된다.
+
+ -->
+
+    <script>
+      //해석본
+      function solution(arr) {
+        let answer = 0;
+        let n = arr.length;
+        let dx = [-1, 0, 1, 0];
+        let dy = [0, 1, 0, -1];
+        for (let i = 0; i < n; i++) {
+          for (let j = 0; j < n; j++) {
+            let flag = 1;
+            for (let k = 0; k < 4; k++) {
+              let nx = i + dx[k];
+              let ny = j + dy[k];
+              if (
+                nx >= 0 &&
+                nx < n &&
+                ny >= 0 &&
+                ny < n /* POINT: arr 영역 안에 idx 유요성 검사 */ &&
+                arr[nx][ny] >= arr[i][j] /* POINT: 현재 산이(arr[i][j])가 주변보다 작으면 봉우리가 아니다 */
+              ) {
+                flag = 0;
+                break;
+              }
+            }
+            if (flag) answer++;
+          }
+        }
+
+        return answer;
+      }
+
+      let arr = [
+        [5, 3, 7, 2, 3],
+        [3, 7, 1, 6, 1],
+        [7, 2, 5, 3, 4],
+        [4, 3, 6, 4, 1],
+        [8, 7, 3, 5, 2],
+      ];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>

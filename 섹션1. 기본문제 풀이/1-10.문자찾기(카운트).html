@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+        # 문제
+          * 지정된 숫자 갯수찾기
+      */
+      // 순회
+      function solution(s, t) {
+        let answer = 0;
+        for (let x of s) {
+          if (x === t) answer++;
+        }
+        return answer;
+      }
+
+      // splite 사용
+      function solution1(s, t) {
+        let answer = s.split(t).length;
+        return answer - 1;
+      }
+
+      /*
+        # 문자 indexOf, includes 확인 방법
+          * str.indexOf("R") => 7(마지막 index)
+          * str.includes("R") => true
+       */
+
+      let str = 'COMPUTERPROGRAMMING';
+      console.log(solution(str, 'R'));
+
+      let str1 = 'COMPUTERPROGRAMMING';
+      console.log(solution1(str, 'R'));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--
+      한 개의 문자열 s와 문자 t가 주어지면 문자열 s의 각 문자가 문자 t와 떨어진 최소거리를 출력하는 프로그램을 작성하세요.
+        * 예시로 첫글자 t는 문자 e와 가장 가까운 길이는 1이다.
+        * 주어진 문자 t는 0이다.
+    -->
+    <script>
+      function solution(s, t) {
+        let answer = [];
+        // 큰숫자를 입력
+        let p = 1000;
+        // let p = Number.MAX_SAFE_INTEGER;
+        // 왼쪽에 있는 인자값 t에 대한 거리
+        for (let x of s) {
+          if (x === t) {
+            p = 0;
+            answer.push(p);
+          } else {
+            p++;
+            answer.push(p);
+          }
+        }
+        console.log(answer);
+
+        console.log('오른쪽에 있는 인자값 t에 대한 거리 알고리즘 수행');
+        // 오른쪽에 있는 인자값 t에 대한 거리
+        p = Number.MAX_SAFE_INTEGER;
+        // 문자열 s를 뒤에서부터 앞으로 이동
+        for (let i = s.length - 1; i >= 0; i--) {
+          if (s[i] === t) p = 0;
+          else {
+            p++;
+            answer[i] = Math.min(answer[i], p);
+            console.log(answer);
+          }
+        }
+        return answer;
+      }
+
+      let str = 'teachermode';
+      console.log(solution(str, 'e'));
+    </script>
+  </body>
+</html>

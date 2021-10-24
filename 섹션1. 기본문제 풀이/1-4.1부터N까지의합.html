@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(n) {
+        let answer = 0;
+        for (let i = 1; i <= n; i++) {
+          answer = answer + i;
+        }
+
+        return answer;
+      }
+
+      function solution1(n) {
+        let answer = Array(n)
+          .fill(0)
+          .map((_, i) => i + 1)
+          .reduce((prev, curr) => prev + curr, 0);
+
+        return answer;
+      }
+
+      console.log(solution(10));
+      console.log(solution1(10));
+    </script>
+  </body>
+</html>

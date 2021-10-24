@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(arr) {
+        let answer = 0;
+        let max = arr[0]; //  # POINT: 최적화 순회하는동안 현재 index보다 큰 값은 그냥 패스! 하게 하기 위해서
+        for (let i = 1; i < arr.length; i++) {
+          if (arr[i] > max) {
+            answer++;
+            max = arr[i];
+          }
+        }
+        return answer;
+      }
+
+      // 최적화 하지 않은 코드
+      function solution(arr) {
+        let answer = 0;
+        for (let i = 1; i < arr.length; i++) {
+          if (arr[i - 1] < arr[i]) ++answer;
+        }
+        return answer;
+      }
+
+      let arr = [130, 135, 148, 140, 145, 150, 150, 153];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>

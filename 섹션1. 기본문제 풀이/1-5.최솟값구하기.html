@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function solution(arr) {
+        let answer,
+          min = Number.MAX_SAFE_INTEGER;
+        /*
+          # POINT: Number.MAX_SAFE_INTEGER
+            * 큰수자로 초기화하고 순회 하면서 최소값을 찾는다.
+            * for 순회의 첫번째 if문은 항상 true
+        */
+
+        for (let i = 1; i < arr.length; i++) {
+          if (arr[i] < min) min = arr[i];
+        }
+        answer = min;
+        return answer;
+      }
+
+      function solution1(arr) {
+        let answer;
+        // # POINT: 배열 요소가 int형 이지만 문자열로 파악하고 정렬한다.
+
+        // answer = arr.sort(); // [1, 11, 2, 3, 5, 7, 9]
+        answer = arr.sort((a, b) => a - b); //[1, 2, 3, 5, 7, 9, 11]
+
+        // return answer[0];
+        return answer.shift();
+      }
+
+      let arr = [5, 7, 1, 3, 2, 9, 11];
+      console.log(solution(arr));
+    </script>
+  </body>
+</html>

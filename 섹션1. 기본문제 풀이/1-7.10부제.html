@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      /*
+       * 0부제에 어긋나는 차량을 카운트
+       * 입력 -> 첫줄: 날짜의 일의자리 숫자, 두번째줄: 차량의 끝 두자리숫자
+       */
+      function solution(day, arr) {
+        let answer = 0;
+
+        for (let x of arr) {
+          if (x % 10 == day) answer++;
+        }
+
+        return answer;
+      }
+
+      arr = [25, 23, 11, 47, 53, 17, 33];
+      console.log(solution(3, arr));
+    </script>
+  </body>
+</html>

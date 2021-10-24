@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--
+      알파벳 대문자로 이루어진 문자열을 입력받아 같은 문자가 연속으로 반복되는 경우 반복되는 문자 바로 오른쪽에 반복 횟수를 표기하는 방법으로 문자열을 압축하는 프로그램을 작성하시 오. 단 반복횟수가 1인 경우 생략합니다.
+
+      ▣ 입력설명
+      첫 줄에 문자열이 주어진다. 문자열의 길이는 100을 넘지 않는다.
+      ▣ 출력설명
+      첫 줄에 압축된 문자열을 출력한다.
+    -->
+    <script>
+      function solution(str) {
+        let answer = '';
+        let count = 1;
+        // KKHSSSSSSSE
+        for (let i = 0; i < str.length - 1; i++) {
+          const str1 = str[i];
+          const str2 = str[i + 1];
+          if (str1 == str2) {
+            ++count;
+          } else {
+            answer += str1 + (count === 1 ? '' : count);
+            count = 1;
+          }
+        }
+
+        let last1Str = str[str.length - 1];
+        let last2Str = str[str.length - 2];
+        if (last1Str === last2Str) {
+          let num = answer.pop();
+          answer = answer + ++num;
+        } else {
+          answer = answer + last1Str;
+        }
+
+        return answer;
+      }
+
+      console.log(solution('KKHSSSSSSSE')); // K2HS7E
+    </script>
+    <script>
+      function solution1(s) {
+        let answer = '';
+        let cnt = 1;
+        s = s + ' '; //# POINT: 순회하면서 i+1계산해야 하는데 s.length-1에서 +1 index는 array index를 넘기때문에 빈문자열을 추가해줌.
+        for (let i = 0; i < s.length - 1; i++) {
+          if (s[i] === s[i + 1]) cnt++;
+          else {
+            answer += s[i];
+            if (cnt > 1) answer += String(cnt);
+            cnt = 1;
+          }
+        }
+        return answer;
+      }
+
+      let str = 'KKHSSSSSSSE';
+      console.log(solution1(str));
+    </script>
+  </body>
+</html>
