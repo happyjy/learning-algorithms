@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--
+      N개의 자연수가 입력되면 각 자연수의 자릿수의 합을 구하고,
+      그 합이 최대인 자연수를 출력 하는 프로그램을 작성하세요.
+      자릿수의 합이 같은 경우 원래 숫자가 큰 숫자를 답으로 합니다.
+
+      만약 235 와 1234가 동시에 답이 될 수 있다면 1234를 답으로 출력해야 합니다.
+     -->
+    <script>
+      function solution(n, arr) {
+        let answer = [];
+        let max = Number.MIN_SAFE_INTEGER;
+        for (let x of arr) {
+          let sum = [...x.toString()].reduce((prev, curr) => {
+            return parseInt(prev) + parseInt(curr);
+          });
+
+          if (sum >= max) {
+            max = sum;
+            answer.push(x);
+          }
+        }
+
+        return Math.max(...answer);
+      }
+
+      let arr = [128, 460, 603, 40, 521, 137, 123];
+      console.log(solution(7, arr)); // 137
+    </script>
+
+    <script>
+      function solution1(n, arr1) {
+        let answer,
+          max = Number.MIN_SAFE_INTEGER;
+        for (let x of arr1) {
+          // 양수의 합을 구하는 방법 - start
+          let sum = 0,
+            tmp = x;
+          while (tmp) {
+            sum += tmp % 10;
+            tmp = Math.floor(tmp / 10);
+          }
+          // 양수의 합을 구하는 방법 - end
+
+          if (sum > max) {
+            max = sum;
+            answer = x;
+          } else if (sum === max) {
+            if (x > answer) answer = x;
+          }
+        }
+        return answer;
+      }
+
+      let arr1 = [128, 460, 603, 40, 521, 137, 123];
+      console.log(solution1(7, arr1));
+    </script>
+  </body>
+</html>
