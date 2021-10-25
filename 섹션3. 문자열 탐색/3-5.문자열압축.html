@@ -49,7 +49,7 @@
       function solution1(s) {
         let answer = '';
         let cnt = 1;
-        s = s + ' '; //# POINT: 순회하면서 i+1계산해야 하는데 s.length-1에서 +1 index는 array index를 넘기때문에 빈문자열을 추가해줌.
+        s = s + ' '; //#POINT: 순회하면서 i+1계산해야 하는데 s.length-1에서 +1 index는 array index를 넘기때문에 빈문자열을 추가해줌.
         for (let i = 0; i < s.length - 1; i++) {
           if (s[i] === s[i + 1]) cnt++;
           else {

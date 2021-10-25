@@ -10,7 +10,7 @@
     <script>
       function solution(arr) {
         let answer = 0;
-        let max = arr[0]; //  # POINT: 최적화 순회하는동안 현재 index보다 큰 값은 그냥 패스! 하게 하기 위해서
+        let max = arr[0]; //  #POINT: 최적화 순회하는동안 현재 index보다 큰 값은 그냥 패스! 하게 하기 위해서
         for (let i = 1; i < arr.length; i++) {
           if (arr[i] > max) {
             answer++;

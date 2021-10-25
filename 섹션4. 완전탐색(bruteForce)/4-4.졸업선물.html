@@ -53,7 +53,7 @@
 
         // i: 할인 계산 대상 index
         for (let i = 0; i < product.length; i++) {
-          // # POINT: 할인 받은걸 먼저 예산(m)에서 빼주고 시작하고
+          // #POINT: 할인 받은걸 먼저 예산(m)에서 빼주고 시작하고
           //          나머지 적은 물건+배송가격부터 빼주면 원하는 값을 얻을 수 있다.
           budget -= product[i][0] / 2 + product[i][1];
           for (let j = 0; j < product.length; j++) {
