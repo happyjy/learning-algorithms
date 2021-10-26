@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--
+        N개의 마구간이 수직선상에 있습니다.
+        각 마구간은 x1, x2, x3, ......, xN의 좌표를 가지며, 마 구간간에 좌표가 중복되는 일은 없습니다.
+        현수는 C마리의 말을 가지고 있는데, 이 말들은 서로 가까이 있는 것을 좋아하지 않습니다.
+        각 마구간에는 한 마리의 말만 넣을 수 있고, 가장 가까운 두 말의 거리가 최대가 되게 말을 마구간에 배치하고 싶습니다.
+        C마리의 말을 N개의 마구간에 배치했을 때 가장 가까운 두 말의 거리가 최대가 되는 그 최대 값을 출력하는 프로그램을 작성하세요.
+
+        ▣ 입력설명
+        첫 줄에 자연수 N(3<=N<=200,000)과 C(2<=C<=N)이 공백을 사이에 두고 주어집니다.
+        둘째 줄에 마구간의 좌표 xi(0<=xi<=1,000,000,000)가 차례로 주어집니다.
+
+        ▣ 출력설명
+        첫 줄에 가장 가까운 두 말의 최대 거리를 출력하세요.
+
+        ▣ 입력예제 1
+        5 3
+        1 2 8 4 9
+
+        ▣ 출력예제 1
+        3
+     -->
+
+    <!--
+       #POINT: 문제 포인트
+
+       * 말의 배열
+       * mid 기준: 말이 놓인 위치 범위를 이분검색으 방법으로 줄여나가 면서 말이 3개 놓이면서 "가장 멀리 떨어져 있는 거리(mid)"를 구하는 방법이다.
+      -->
+    <script>
+      function count(arr, dist) {
+        // horse point
+        let hp = 0;
+        let count = 1;
+        for (let idx = 0; idx < arr.length; idx++) {
+          debugger;
+          if (arr[idx] - arr[hp] >= dist) {
+            hp = idx;
+            count++;
+          }
+        }
+        return count;
+      }
+
+      function solution(c, arr) {
+        let answer;
+        arr.sort();
+
+        let lt = arr[0];
+        let rt = arr[arr.length - 1];
+
+        while (lt <= rt) {
+          let mid = parseInt((rt + lt) / 2);
+          if (count(arr, mid) >= 3) {
+            //말개수 조건 충족 => 말사이 거리 조건 증가
+            lt = mid + 1;
+            answer = mid;
+          } else {
+            //말개수 조건 부족 => 말사이 거리 조건 줄이기
+            rt = mid - 1;
+          }
+        }
+        return answer;
+      }
+
+      let arr = [1, 2, 8, 4, 9];
+      console.log(solution(3, arr));
+    </script>
+
+    <!-- 해석 -->
+    <script>
+      (() => {
+        function count(stable, dist) {
+          let cnt = 1,
+            ep = stable[0];
+          for (let i = 1; i < stable.length; i++) {
+            if (stable[i] - ep >= dist) {
+              cnt++;
+              ep = stable[i];
+            }
+          }
+          return cnt;
+        }
+        function solution(c, stable) {
+          let answer;
+          stable.sort((a, b) => a - b);
+          let lt = 1;
+          let rt = stable[stable.length - 1];
+          while (lt <= rt) {
+            let mid = parseInt((lt + rt) / 2);
+            if (count(stable, mid) >= c) {
+              answer = mid;
+              lt = mid + 1;
+            } else rt = mid - 1;
+          }
+          return answer;
+        }
+
+        let arr = [1, 2, 8, 4, 9];
+        console.log(solution(3, arr));
+      })();
+    </script>
+  </body>
+</html>
