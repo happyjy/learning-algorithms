@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(m, resultList, timeList) {
+        let answer = Number.MIN_SAFE_INTEGER;
+
+        //#POINT: L- level
+        function DFS(L, resultSum, timeSum) {
+          if (timeSum > m) return;
+
+          if (L === resultList.length) {
+            if (timeSum <= m) {
+              answer = Math.max(answer, resultSum);
+            }
+          } else {
+            DFS(L + 1, resultSum + resultList[L], timeSum + timeList[L]);
+            DFS(L + 1, resultSum, timeSum);
+          }
+        }
+
+        DFS(0, 0, 0);
+        return answer;
+      }
+
+      let resultList = [10, 25, 15, 6, 7]; // 점수
+      let timeList = [5, 12, 8, 3, 4]; // 시간
+      console.log(solution(20, resultList, timeList));
+    </script>
+    <script>
+      (() => {
+        function solution(m, ps, pt) {
+          let answer = Number.MIN_SAFE_INTEGER;
+          let n = ps.length;
+
+          function DFS(L, sum, time) {
+            if (time > m) return;
+            if (L === n) {
+              answer = Math.max(answer, sum);
+            } else {
+              DFS(L + 1, sum + ps[L], time + pt[L]);
+              DFS(L + 1, sum, time);
+            }
+          }
+
+          DFS(0, 0, 0);
+          return answer;
+        }
+
+        let ps = [10, 25, 15, 6, 7];
+        let pt = [5, 12, 8, 3, 4];
+        console.log(solution(20, ps, pt));
+      })();
+    </script>
+  </body>
+</html>

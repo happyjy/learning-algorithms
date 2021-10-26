@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(c, arr) {
+        let answer;
+        let max = Number.MIN_SAFE_INTEGER;
+
+        function DFS(L, sum) {
+          // #POINT: 종단점
+          if (sum > c) return;
+          // if (L === arr.length + 1) return;
+
+          // #POINT 이진 트리를 끝까지 돌았을때 확인 하면 된다.
+          //  * 처음에는 아래와 같이 기준을 무개로 잡았는데 이 케이스는 위 종단점으로 바꾸고
+          //  * 지금과 같이 이진트리에 root 노드까지 도달 했다는 케이스 (L === arr.length)로 바꿨다.
+          // if (c - sum < 0) {
+          if (L === arr.length) {
+            max = Math.max(sum, max);
+          } else {
+            DFS(L + 1, sum + arr[L]);
+            DFS(L + 1, sum);
+          }
+        }
+
+        DFS(0, 0);
+        return (answer = max);
+      }
+
+      let arr = [81, 58, 42, 33, 61];
+      console.log(solution(259, arr));
+    </script>
+
+    <script>
+      (() => {
+        function solution(c, arr) {
+          let answer = Number.MIN_SAFE_INTEGER;
+          let n = arr.length;
+
+          function DFS(L, sum) {
+            if (sum > c) return;
+            if (L === n) {
+              answer = Math.max(answer, sum);
+            } else {
+              DFS(L + 1, sum + arr[L]);
+              DFS(L + 1, sum);
+            }
+          }
+
+          DFS(0, 0);
+          return answer;
+        }
+
+        let arr = [81, 58, 42, 33, 61];
+        console.log(solution(259, arr));
+      })();
+    </script>
+  </body>
+</html>
