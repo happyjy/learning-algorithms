@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!--
+      1부터N까지번호가적힌구슬이있습니다.이중 M개를뽑는방법의수를출력하는프로그 램을 작성하세요.
+
+      ▣ 입력설명
+      첫 번째 줄에 자연수 N(3<=N<=10)과 M(2<=M<=N) 이 주어집니다.
+
+      ▣ 출력설명
+      첫 번째 줄에 결과를 출력합니다. 맨 마지막 총 경우의 수를 출력합니다. 출력순서는 사전순으로 오름차순으로 출력합니다.
+
+      ▣ 입력예제 1
+      42
+
+      ▣ 출력예제 1
+      1 2
+      1 3
+      1 4
+      2 3
+      2 4
+      3 4
+      6
+     -->
+    <script>
+      function solution(num, digit) {
+        let answer = [];
+        // combination(조합)
+        // element(원소)
+        let combEl = [];
+        function DFS(L, d) {
+          if (L === digit) {
+            answer.push([...combEl]);
+          } else {
+            for (let i = d; i <= num; i++) {
+              combEl.push(i);
+              //POINT: i+1 의미 현재 combEl에 설정한 값을 사용하지 않겠다는 의미
+              DFS(L + 1, i + 1);
+              //POINT: DFS L===digit에 도달 한뒤 이전 스택으로 돌아와 combEl.pop을 해줘야 다음 조합을 구할수 있다.
+              combEl.pop();
+            }
+          }
+        }
+        DFS(0, 1);
+
+        return answer;
+      }
+      console.log(solution(4, 2));
+    </script>
+
+    <!-- 해석 -->
+    <script>
+      (() => {
+        function solution(n, m) {
+          let answer = [];
+          let tmp = Array.from({ length: m }, () => 0);
+
+          function DFS(L, s) {
+            if (L === m) {
+              answer.push(tmp.slice());
+            } else {
+              for (let i = s; i <= n; i++) {
+                // POINT: tmp 배열 역할은 조합 숫자를 찾기 위한 배열이다.
+                // 순열(permutation)을 찾을때 이 역할이 크다.
+                // 나는 push, pop으로 진행했다.
+                tmp[L] = i;
+                DFS(L + 1, i + 1);
+              }
+            }
+          }
+          DFS(0, 1);
+          return answer;
+        }
+
+        console.log(solution(4, 2));
+      })();
+    </script>
+  </body>
+</html>
