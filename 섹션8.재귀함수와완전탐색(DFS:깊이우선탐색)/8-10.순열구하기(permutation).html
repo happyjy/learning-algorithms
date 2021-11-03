@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>8-10.순열구하기(permutation)</title>
   </head>
   <body>
     <!--
@@ -48,11 +48,13 @@
             answer.push([...tmp]);
           } else {
             for (let i = 0; i < arr.length; i++) {
-              // #POINT: 사용하지 않은 문자에 대해서만 문자열을 추가 할 수 있게
+              // #POINT-1: 사용하지 않은 문자에 대해서만 문자열을 추가 할 수 있게
               if (ch[i] === 0) {
+                // #POINT-1: arr의 i번째 property 사용 여부 체크
                 ch[i] = 1;
                 tmp[L] = arr[i];
                 DFS(L + 1);
+                // #POINT-1: arr의 i번째 property 사용 여부 체크 해제
                 ch[i] = 0;
               }
             }

@@ -28,12 +28,12 @@
         for (let i = 0; i < n; i++) {
           for (let j = 0; j < n; j++) {
             if (board[i][j] === 1) {
-              debugger;
-              console.log(board);
+              // debugger;
+              // console.log(board);
               board[i][j] = 0;
               answer++;
               DFS(i, j);
-              console.log('--- DFS END ---');
+              // console.log('--- DFS END ---');
             }
           }
         }

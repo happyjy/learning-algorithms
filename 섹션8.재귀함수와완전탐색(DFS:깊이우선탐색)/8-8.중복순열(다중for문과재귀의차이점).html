@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>출력결과</title>
+    <title>8-8.중복순열(다중for문과재귀의차이점)</title>
   </head>
   <body>
     <!--
@@ -30,6 +30,11 @@
       3 3
       9
       -->
+
+    <!--
+      1,2,3 세개 숫자에서 2개 뽑아서 만들수 있는 숫자의 "순열"
+      * 순열: 숫자 중복 사용 x
+     -->
     <script>
       function solution(n, m) {
         let answer = [];
@@ -62,6 +67,8 @@
 
       console.log(solution(3, 2));
     </script>
+
+    <!-- 해석본 -->
     <script>
       (() => {
         function solution(n, m) {

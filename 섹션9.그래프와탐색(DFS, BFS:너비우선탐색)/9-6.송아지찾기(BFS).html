@@ -5,12 +5,13 @@
   </head>
   <body>
     <!-- 해석1 -->
-    <!-- distance를 사용 -->
+    <!-- distance를 사용, 상태트리탐색 level을 사용 -->
     <script>
       function solution(s, e) {
         let answer = 0;
         let ch = Array.from({ length: 10001 }, () => 0);
         let dis = Array.from({ length: 10001 }, () => 0);
+
         let queue = [];
         queue.push(s);
         ch[s] = 1;
@@ -20,16 +21,18 @@
         while (queue.length) {
           // #POINT - x: 현수의 현재 위치
           let x = queue.shift();
-          // #POINT - 현수가 이동하는 방법 -1, +1, +5\
+          // #POINT - 현수가 이동하는 방법 -1, +1, +5
           // nx: next position
           for (let nx of [x - 1, x + 1, x + 5]) {
             if (nx === e) return dis[x] + 1;
+            // #POINT: ch[nx] === 0: 먼저 이미 도달한 경우도 있을 수 있어 추가.
             if (nx > 0 && nx <= 10000 && ch[nx] === 0) {
               ch[nx] = 1;
               queue.push(nx);
-              if (dis[nx] !== 0) {
-                debugger;
-              }
+              // if (dis[nx] !== 0) {
+              //   debugger;
+              // }
+              // #POINT: 상태트리라고 생각했을때 level이 1증가
               dis[nx] = dis[x] + 1;
             }
           }
@@ -37,37 +40,9 @@
         return answer;
       }
 
+      // 8: 현수위치
+      // 3: 송아지 위치
       console.log(solution(8, 3));
-    </script>
-
-    <!-- 해석2 -->
-    <!-- 상태트리탐색 level을 사용 -->
-    <script>
-      function solution(s, e) {
-        let answer = 0;
-        let ch = Array.from({ length: 10001 }, () => 0);
-        let queue = [];
-        queue.push(s);
-        ch[s] = 1;
-        let L = 0;
-        while (queue.length) {
-          let len = queue.length;
-          for (let i = 0; i < len; i++) {
-            let x = queue.shift();
-            for (let nx of [x - 1, x + 1, x + 5]) {
-              if (nx === e) return L + 1;
-              if (nx > 0 && nx <= 10000 && ch[nx] === 0) {
-                ch[nx] = 1;
-                queue.push(nx);
-              }
-            }
-          }
-          L++;
-        }
-        return answer;
-      }
-
-      console.log(solution(5, 14));
     </script>
   </body>
 </html>

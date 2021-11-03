@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>8-13.수열추측하기-파스칼삼각형(순열,이항계수응용)</title>
   </head>
   <body>
     <!--
@@ -55,6 +55,7 @@
             answer = p.slice();
             flag = 1;
           } else {
+            // #POINT: 순열만듬
             for (let i = 1; i <= n; i++) {
               if (ch[i] === 0) {
                 ch[i] = 1;
@@ -65,6 +66,8 @@
             }
           }
         }
+
+        // #point: 같은 파일명 마크다운 #POINT1 부분 확인하기(조합 구하기)
         for (let i = 0; i < n; i++) {
           b[i] = combi(n - 1, i);
         }

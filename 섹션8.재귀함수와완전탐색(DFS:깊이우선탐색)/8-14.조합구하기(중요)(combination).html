@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>8-14.조합구하기(중요)(combination)</title>
   </head>
   <body>
     <!--
@@ -38,11 +38,12 @@
           if (L === digit) {
             answer.push([...combEl]);
           } else {
+            // ⭐️POINT:  let i = d 의미 => 이전레벨에서 사용했던 숫자들은 사용하지않는다.
             for (let i = d; i <= num; i++) {
               combEl.push(i);
               //POINT: i+1 의미 현재 combEl에 설정한 값을 사용하지 않겠다는 의미
               DFS(L + 1, i + 1);
-              //POINT: DFS L===digit에 도달 한뒤 이전 스택으로 돌아와 combEl.pop을 해줘야 다음 조합을 구할수 있다.
+              // ⭐️POINT: DFS L===digit에 도달 한뒤 이전 스택으로 돌아와 combEl.pop을 해줘야 다음 조합을 구할수 있다.
               combEl.pop();
             }
           }

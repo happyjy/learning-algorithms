@@ -9,6 +9,7 @@
         let answer = 0;
         let dx = [-1, 0, 1, 0];
         let dy = [0, 1, 0, -1];
+
         function DFS(x, y) {
           if (x === 6 && y === 6) answer++;
           else {
@@ -17,10 +18,10 @@
               let ny = y + dy[k];
               //#POINT: 갈수 잇는 길 확인
               if (nx >= 0 && nx <= 6 && ny >= 0 && ny <= 6 && board[nx][ny] === 0) {
-                //#POINT: 간길 1로 체크
+                //#POINT-A: 간길 1로 체크
                 board[nx][ny] = 1;
                 DFS(nx, ny);
-                //#POINT: 막다른곳에 도달 했을때, 갈길이 없을때 간길 1로 체크한것을 풀어준다.
+                //#POINT-A: 막다른곳에 도달 했을때, 갈길이 없을때 간길 1로 체크한것을 풀어준다.
                 board[nx][ny] = 0;
               }
             }

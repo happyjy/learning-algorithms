@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>8-9.동전교환(DFS-Cut edge Tech)</title>
   </head>
   <body>
     <!--
@@ -58,21 +58,56 @@
       console.log(solution(15, arr));
     </script>
 
+    <!-- 거스를수 잇는 모든 방법 print -->
+    <script>
+      function solution(m, arr) {
+        let answer = Number.MAX_SAFE_INTEGER;
+        let n = arr.length;
+        let temp = [];
+
+        function DFS(L, sum) {
+          if (sum > m) return;
+
+          // if (L >= answer) return;
+          if (sum === m) {
+            answer = Math.min(answer, L);
+            console.log(temp);
+          } else {
+            for (let i = 0; i < n; i++) {
+              temp.push(arr[i]);
+              DFS(L + 1, sum + arr[i]);
+              temp.pop();
+            }
+          }
+        }
+        DFS(0, 0);
+        return answer;
+      }
+
+      let arr = [1, 2, 5];
+      console.log(solution(15, arr));
+    </script>
+
+    <!-- 해석본 -->
     <script>
       (() => {
         function solution(m, arr) {
           let answer = Number.MAX_SAFE_INTEGER;
           let n = arr.length;
+          let temp = [];
 
           function DFS(L, sum) {
             if (sum > m) return;
 
-            if (L >= answer) return;
+            // if (L >= answer) return;
             if (sum === m) {
               answer = Math.min(answer, L);
+              console.log(temp);
             } else {
               for (let i = 0; i < n; i++) {
+                temp.push(arr[i]);
                 DFS(L + 1, sum + arr[i]);
+                temp.pop();
               }
             }
           }

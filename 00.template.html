@@ -1,12 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>8-12.조합수(메모이제이션)</title>
   </head>
   <body>
-    <script></script>
+    <script>
+      function solution(n, digit) {
+        let answer = [];
+        let ch = Array.from({ length: n }, () => 0);
+        let temp = Array.from({ length: digit }, () => 0);
+
+        function DFS(L, i) {
+          if (L === digit) {
+            answer.push([...temp]);
+          } else {
+          }
+        }
+
+        DFS(0, 0);
+        return answer;
+      }
+
+      console.log(solution(5, 3));
+    </script>
   </body>
 </html>

@@ -13,7 +13,9 @@
           console.log(queue);
           let v = queue.shift();
           answer += v + ' ';
-          //nv: next vortax
+
+          //* POINT - nv: next vortax
+          //* POINT - [v * 2, v * 2 + 1]: 이진트리 특성
           for (let nv of [v * 2, v * 2 + 1]) {
             if (nv > 7) continue;
             queue.push(nv);

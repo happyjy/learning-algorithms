@@ -8,21 +8,26 @@
       function solution(board) {
         let answer = 0;
         let n = board.length;
-        // #point: dx, dy: 9시부터 진행
+        // #POINT: dx, dy: 9시부터 진행
         let dx = [-1, -1, 0, 1, 1, 1, 0, -1];
         let dy = [0, 1, 1, 1, 0, -1, -1, -1];
         let queue = [];
 
         for (let i = 0; i < n; i++) {
           for (let j = 0; j < n; j++) {
+            // board에 1(육지)일때 진행
             if (board[i][j] === 1) {
+              // 1을 도달했을때 0으로 초기화
               board[i][j] = 0;
+              // BFS 시작
               queue.push([i, j]);
               answer++;
 
+              // BFS 끝날때 까지 진행
               while (queue.length) {
                 let [x, y] = queue.shift();
                 console.log(x, y);
+                // 네모칸 8방향을 돌면서 1이 있는지 확인!
                 for (let k = 0; k < 8; k++) {
                   let nx = x + dx[k];
                   let ny = y + dy[k];
