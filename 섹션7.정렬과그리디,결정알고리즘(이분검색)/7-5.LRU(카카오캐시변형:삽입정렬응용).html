@@ -10,14 +10,23 @@
     <script>
       function solution(size, arr) {
         let answer = Array.from({ length: size }, () => 0);
+
         arr.forEach((x) => {
           let pos = -1;
-          for (let i = 0; i < size; i++) if (x === answer[i]) pos = i;
+          for (let i = 0; i < size; i++) {
+            if (x === answer[i]) {
+              pos = i;
+            }
+          }
+
           if (pos === -1) {
+            // 새로 추가 되는 숫자
             for (let i = size - 1; i >= 1; i--) {
+              //  #앞에 있는 문자열을 오른쪽으로 땡긴다.(새로 추가되는 숫자를 0번재 index에 넣기 위해서)
               answer[i] = answer[i - 1];
             }
           } else {
+            // 기존에 있던 숫자.
             for (let i = pos; i >= 1; i--) {
               answer[i] = answer[i - 1];
             }

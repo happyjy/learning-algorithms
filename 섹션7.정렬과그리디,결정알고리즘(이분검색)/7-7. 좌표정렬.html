@@ -47,9 +47,9 @@
         let answer;
         answer = arr.sort((a, b) => {
           if (a[0] === b[0]) {
-            return a[1] - b[1];
+            return a[1] - b[1]; // 첫번째 idx 값이 같으면 => b 번째 오름차로 정렬
           } else {
-            return a[0] - b[0];
+            return a[0] - b[0]; // 첫번째 idx 같이 다르면 => a 번째 오름차로 정렬
           }
         });
         return answer;

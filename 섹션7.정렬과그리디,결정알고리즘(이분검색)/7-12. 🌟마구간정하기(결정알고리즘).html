@@ -36,13 +36,13 @@
        * mid 기준: 말이 놓인 위치 범위를 이분검색으 방법으로 줄여나가 면서 말이 3개 놓이면서 "가장 멀리 떨어져 있는 거리(mid)"를 구하는 방법이다.
       -->
     <script>
-      function count(arr, dist) {
+      function count(arr, distance) {
         // horse point
         let hp = 0;
         let count = 1;
         for (let idx = 0; idx < arr.length; idx++) {
           debugger;
-          if (arr[idx] - arr[hp] >= dist) {
+          if (arr[idx] - arr[hp] >= distance) {
             hp = idx;
             count++;
           }
@@ -59,7 +59,7 @@
 
         while (lt <= rt) {
           let mid = parseInt((rt + lt) / 2);
-          if (count(arr, mid) >= 3) {
+          if (count(arr, mid) >= c) {
             //말개수 조건 충족 => 말사이 거리 조건 증가
             lt = mid + 1;
             answer = mid;

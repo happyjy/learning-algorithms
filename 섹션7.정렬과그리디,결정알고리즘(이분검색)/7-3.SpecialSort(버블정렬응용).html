@@ -7,12 +7,16 @@
     <title>7-3.SpecialSort(버블정렬응용)</title>
   </head>
   <body>
+    <!--
+      주어진 배열을 순서를 그대로 하고 음수를 앞으로 양수를 위고 한다.
+     -->
     <script>
       function solution(arr) {
         let answer = arr;
         for (let i = 0; i < arr.length - 1; i++) {
           for (let j = 0; j < arr.length - i - 1; j++) {
             // POINT: if (arr[j] > 0 && arr[j + 1] < 0)
+            // 인접한 index 값을 비교해서 큰index가 0보다 작을때, 작은index가 0보다 클때 순서를 바꿔주면 음수는 앞쪽으로 양수는 뒤쪽으로 이동된다.
             if (arr[j] > 0 && arr[j + 1] < 0) {
               [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
             }
@@ -23,6 +27,16 @@
 
       let arr = [1, 2, 3, -3, -2, 5, 6, -6];
       console.log(solution(arr));
+      /*
+        0: -3
+        1: -2
+        2: -6
+        3: 1
+        4: 2
+        5: 3
+        6: 5
+        7: 6
+      */
     </script>
   </body>
 </html>

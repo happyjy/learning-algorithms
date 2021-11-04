@@ -46,7 +46,11 @@
             answer = mid + 1;
             break;
           } else if (arr[mid] > target) {
+            // 찾는 값이 중앙(mid)보다 크면
+            // lt를 mid+1로 변경
             lt = mid + 1;
+            // 찾는 값이 중앙(mid)보다 크면
+            // rt를 mid-1로 변경
           } else {
             rt = mid - 1;
           }
