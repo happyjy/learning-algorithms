@@ -5,10 +5,15 @@
     <title>출력결과</title>
   </head>
   <body>
+    <!--
+      붙어 있는 연속적인 숫자가 아니라는 점을 명심하자.
+      떨어져 있어도 증가 하는 숫자의 최장 길이를 뽑앙 보자!
+     -->
     <script>
       function solution(arr) {
         let answer = 0;
         let dy = Array.from({ length: arr.length }, () => 0);
+
         dy[0] = 1;
         for (let i = 1; i < arr.length; i++) {
           let max = 0;

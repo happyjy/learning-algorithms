@@ -8,10 +8,13 @@
     <script>
       function solution(n) {
         let answer = 0;
+        // #POINT: "+ 2" 의미
+        //  * n은 돌다리 개수 일뿐이다.
+        //  * 즉 "출발지점, 도착지점"을 포함하고 있지 않다.
         let dy = Array.from({ length: n + 2 }, () => 0);
         dy[1] = 1;
         dy[2] = 2;
-        //+ 1: n은 돌다리개수, 1은 도착지점
+        // #POINT: "+ 1" n은 돌다리개수, 1은 도착지점
         for (let i = 3; i <= n + 1; i++) {
           dy[i] = dy[i - 2] + dy[i - 1];
         }

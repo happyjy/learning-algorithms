@@ -8,7 +8,10 @@
     <script>
       function solution(n) {
         let answer = 0;
-        let dy = Array.from({ length: n + 1 }, () => 0);
+        // #POINT: "+1"의미
+        //  * 시작지점이 0이다.
+        //  * dy index 0부터 시작하면 dy[n-1]이 되어야 한다.
+        let dy = Array.from({ length: n }, () => 0);
         dy[1] = 1;
         dy[2] = 2;
         for (let i = 3; i <= n; i++) {

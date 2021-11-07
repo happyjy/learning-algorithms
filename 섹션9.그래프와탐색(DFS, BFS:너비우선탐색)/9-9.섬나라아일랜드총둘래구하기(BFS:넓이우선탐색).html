@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <!-- 3문제 틀렸다고 나옴. -->
+    <script>
+      function solution(maps) {
+        let answer = 0;
+        let ySize = maps.length;
+        let xSize = maps[0].length;
+        let dx = [-1, 0, 1, 0];
+        let dy = [0, 1, 0, -1];
+        let queue = [];
+
+        for (let i = 0; i < ySize; i++) {
+          for (let j = 0; j < xSize; j++) {
+            // 지도에서 1(땅)일때 탐색
+            if (maps[i][j] === 1) {
+              // 땅(1)을 도달했을때 (바다)0으로 초기화
+              maps[i][j] = 0;
+              // BFS 시작
+              queue.push([i, j]);
+
+              // 땅 list, dictionaryObject 초기화
+              let islandList = [];
+              let islandObject = {};
+
+              // BFS 끝날때 까지 진행
+              while (queue.length) {
+                let [x, y] = queue.shift();
+                islandList.push([x, y]);
+                islandObject[`${x}${y}`] = [x, y];
+
+                // 땅 4방향을 돌면서 1이 있는지 확인/바다로 초기화 => 땅 확인
+                for (let k = 0; k < 4; k++) {
+                  let nx = x + dx[k];
+                  let ny = y + dy[k];
+                  if (nx >= 0 && nx < ySize && ny >= 0 && ny < xSize && maps[nx][ny] === 1) {
+                    maps[nx][ny] = 0;
+                    queue.push([nx, ny]);
+                  }
+                }
+              }
+              // island 둘레
+              // # island cell * 4(4면) - (cell의 겹치는 면 개수)
+              // * island cell * 4(4면)
+              let sum = 4 * islandList.length;
+              // * cell의 겹치는 면 개수를 구해서 빼준다.
+              for (let i = 0; i < islandList.length; i++) {
+                for (let l = 0; l < dx.length; l++) {
+                  let nxx = islandList[i][0] + dx[l];
+                  let nyy = islandList[i][1] + dy[l];
+                  if (islandObject[nxx.toString() + nyy.toString()]) {
+                    --sum;
+                  }
+                }
+              }
+              answer += sum;
+            }
+          }
+        }
+        return answer;
+      }
+
+      var arr = [
+        [1, 1, 0, 0, 0, 1, 0],
+        [0, 1, 1, 0, 1, 1, 0],
+        [0, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 1, 1],
+        [1, 1, 0, 1, 1, 0, 0],
+        [1, 0, 0, 0, 1, 0, 0],
+        [1, 0, 1, 0, 1, 0, 0],
+      ];
+      console.log(solution(arr));
+
+      var arr = [
+        [0, 0, 1, 0, 0],
+        [0, 1, 1, 0, 1],
+        [0, 0, 1, 0, 1],
+        [1, 1, 1, 0, 1],
+      ];
+      console.log(solution(arr)); // 24
+
+      var arr = [
+        [1, 0, 1, 1],
+        [0, 0, 1, 1],
+        [1, 1, 0, 1],
+        [1, 1, 0, 0],
+      ];
+
+      console.log(solution(arr)); // 22
+    </script>
+  </body>
+</html>
