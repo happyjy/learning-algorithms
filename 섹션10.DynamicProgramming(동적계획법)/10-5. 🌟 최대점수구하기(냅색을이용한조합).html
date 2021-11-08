@@ -14,7 +14,7 @@
           let ps = arr[i][0]; // problem solve
           let pt = arr[i][1]; // problem time
 
-          // #point: 역방향으로 순회한다.
+          // #POINT: 역방향으로 순회한다.
           // 정방향으로 하면 10점짜리 5분만에 풀은 문제를 하면 dy배열에 중복으로 사용할 수 있기 때문에
           for (let j = m; j >= pt; j--) {
             dy[j] = Math.max(dy[j], dy[j - pt] + ps);
