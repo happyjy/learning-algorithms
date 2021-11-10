@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(t1, t2) {
+        let answer = '0 ';
+
+        function BFS(arr) {
+          let queue = [];
+          debugger;
+          queue.push(...arr.shift());
+
+          // while (queue.length && arr.length > 0) {
+          while (queue.some((v) => v != -1)) {
+            console.log(queue);
+            let v = queue.shift();
+            answer += v + ' ';
+            arr.length > 0 && queue.push(...arr.shift());
+
+            //* POINT - nv: next vortax
+            //* POINT - [v * 2, v * 2 + 1]: 이진트리 특성
+            // for (let nv of [v * 2, v * 2 + 1]) {
+            //   if (nv > 7) continue;
+            //   queue.push(nv);
+            // }
+            // for문 대신에 이렇게 해도 됨.
+            // queue.push(v * 2);
+            // queue.push(v * 2 + 1);
+          }
+        }
+
+        console.log(BFS(t1));
+
+        return answer;
+      }
+
+      let t1 = [
+        [1, 2],
+
+        [3, 4],
+        [5, 6],
+
+        [-1, 7],
+        [8, 9],
+        [-1, -1],
+        [-1, -1],
+
+        [-1, -1],
+        [-1, -1],
+        [-1, -1],
+      ];
+      let t2 = [
+        [1, 2],
+        [-1, -1],
+        [-1, -1],
+      ];
+      console.log(solution(t1, t2));
+    </script>
+  </body>
+</html>
