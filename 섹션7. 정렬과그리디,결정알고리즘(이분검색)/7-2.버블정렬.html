@@ -11,9 +11,9 @@
       function solution(arr) {
         let answer = arr;
         for (let i = 0; i < arr.length - 1; i++) {
-          // #point: arr.length-i-1
+          // #POINT: arr.length-i-1
           for (let j = 0; j < arr.length - i - 1; j++) {
-            // #point; arr[j]>arr[j+1] j, j+1번째를 비교한다.
+            // #POINT; arr[j]>arr[j+1] j, j+1번째를 비교한다.
             if (arr[j] > arr[j + 1]) {
               [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
             }
