@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <!-- 30분 소요 -->
+    <!--
+      * 🌟완벽하지 않음
+        - 테트 반개 통과 하지 못함
+        - 효율성 테스트 4개 모두 실패
+
+      * (1,1)에서 (n,m)으로 도달하는 방법중 가장 짧은 거리를 구하세요.
+      * 제일 짧은 경로와 그 길이를 구해라
+      * 갈수 없으면 -1
+
+
+      * 🌟갈수 있는 길 1
+      * 🌟갈수 없는 길 0
+     -->
+    <script>
+      function solution(board) {
+        let answer = -1;
+        let boardLen = board.length - 1;
+        // 서, 북, 동, 남
+        let dx = [-1, 0, 1, 0];
+        let dy = [0, 1, 0, -1];
+
+        let count = 1; //#POINT: (1,1)에서 (n,m)으로 도달하는 방법중 가장 짧은 거리
+        let shortest = Number.MAX_SAFE_INTEGER;
+
+        function DFS(x, y) {
+          if (x === boardLen && y === boardLen) {
+            shortest = Math.min(shortest, count);
+            // count = 0;
+            answer = shortest;
+          } else {
+            for (let k = 0; k < 4; k++) {
+              let nx = x + dx[k];
+              let ny = y + dy[k];
+              //#POINT: 갈수 잇는 길 확인
+              if (nx >= 0 && nx <= boardLen && ny >= 0 && ny <= boardLen && board[nx][ny] === 1) {
+                //#POINT-A: 간길 0로 체크
+                board[nx][ny] = 0;
+                ++count;
+                DFS(nx, ny);
+                //#POINT-A: 막다른곳에 도달 했을때, 갈길이 없을때 간길 1로 체크한것을 풀어준다.
+                --count;
+                board[nx][ny] = 1;
+              }
+            }
+          }
+        }
+        board[0][0] = 1;
+        DFS(0, 0);
+        return answer;
+      }
+
+      // var arr = [
+      //   [0, 0, 0, 0, 0, 0, 0],
+      //   [0, 1, 1, 1, 1, 1, 0],
+      //   [0, 0, 0, 1, 0, 0, 0],
+      //   [1, 1, 0, 1, 0, 1, 1],
+      //   [1, 1, 0, 0, 0, 0, 1],
+      //   [1, 1, 0, 1, 1, 0, 0],
+      //   [1, 0, 0, 0, 0, 0, 0],
+      // ];
+
+      // console.log(solution(arr));
+
+      var arr = [
+        [1, 0, 1, 1, 1],
+        [1, 0, 1, 0, 1],
+        [1, 0, 1, 1, 1],
+        [1, 1, 1, 0, 1],
+        [0, 0, 0, 0, 1],
+      ];
+      console.log(solution(arr)); // 11
+
+      var arr = [
+        [1, 0, 1, 1, 1],
+        [1, 0, 1, 0, 1],
+        [1, 0, 1, 1, 1],
+        [1, 1, 1, 0, 0],
+        [0, 0, 0, 0, 1],
+      ];
+      console.log(solution(arr)); // -1
+    </script>
+  </body>
+</html>

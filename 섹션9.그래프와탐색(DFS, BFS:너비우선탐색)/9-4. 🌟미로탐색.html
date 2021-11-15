@@ -4,20 +4,26 @@
     <title>출력결과</title>
   </head>
   <body>
+    <!--
+      * 🌟갈수 있는 길 0
+      * 🌟갈수 없는 길 1
+     -->
     <script>
       function solution(board) {
         let answer = 0;
+        let boardLen = board.length - 1;
+        // 서, 북, 동, 남
         let dx = [-1, 0, 1, 0];
         let dy = [0, 1, 0, -1];
 
         function DFS(x, y) {
-          if (x === 6 && y === 6) answer++;
+          if (x === boardLen && y === boardLen) answer++;
           else {
             for (let k = 0; k < 4; k++) {
               let nx = x + dx[k];
               let ny = y + dy[k];
               //#POINT: 갈수 잇는 길 확인
-              if (nx >= 0 && nx <= 6 && ny >= 0 && ny <= 6 && board[nx][ny] === 0) {
+              if (nx >= 0 && nx <= boardLen && ny >= 0 && ny <= boardLen && board[nx][ny] === 0) {
                 //#POINT-A: 간길 1로 체크
                 board[nx][ny] = 1;
                 DFS(nx, ny);
