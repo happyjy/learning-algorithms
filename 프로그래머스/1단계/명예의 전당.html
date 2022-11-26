@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>출력결과</title>
+  </head>
+  <body>
+    <script>
+      function solution(k, scoreList) {
+        let answer = [];
+        let hallofFameList = [];
+        // let hallofFameList = Array.from({ length: k }, () => 0);
+        // console.log("hallofFameList: ", hallofFameList);
+
+        for (const idx in scoreList) {
+          if (parseInt(idx) < k) {
+            hallofFameList.push(scoreList[idx]);
+          } else {
+            // console.log(
+            //   "hallofFameList.at(-1): ",
+            //   hallofFameList.at(-1),
+            //   scoreList[idx]
+            // );
+            if (hallofFameList.at(-1) < scoreList[idx]) {
+              hallofFameList[k - 1] = scoreList[idx];
+            }
+          }
+
+          hallofFameList.sort((a, b) => b - a);
+          // console.log("hallofFameList: ", hallofFameList);
+          answer.push(hallofFameList.at(-1));
+        }
+        console.log(answer);
+        return answer;
+      }
+
+      let k = 3;
+      let score = [10, 100, 20, 150, 1, 100, 200];
+
+      solution(k, score);
+      //[10, 10, 10, 20, 20, 100, 100]
+    </script>
+  </body>
+</html>
