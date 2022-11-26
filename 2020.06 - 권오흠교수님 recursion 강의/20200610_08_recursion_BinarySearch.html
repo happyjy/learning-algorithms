@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="demo"></div>
+    <script>
+      function binarySearch(items, target, begin, end) {
+        if (begin > end) {
+          return false;
+        } else {
+          var middle = Math.floor((begin + end) / 2);
+          /* 
+            type comResult: -1, 0, 1 (middle 기준 왼쪽 탐색, 타겟찾음, middle 기준 오른쪽 탐색)
+          */
+          var compResult =
+            target === items[middle] ? 0 : target > items[middle] ? 1 : -1;
+
+          if (compResult == 0) {
+            return middle;
+          } else if (compResult < 0) {
+            return binarySearch(items, target, begin, middle - 1);
+          } else {
+            return binarySearch(items, target, middle + 1, end);
+          }
+        }
+      }
+
+      var arr = [10, 20, 30, 40, 50];
+      console.log(binarySearch(arr, 40, 0, arr.length - 1));
+    </script>
+
+    <script>
+      function binarySearch(items, target, begin, end) {
+        if (begin > end) {
+          return false;
+        } else {
+          // Math.floor: 내림
+          // Math.ceil: 버림
+          var middle = Math.floor((begin + end) / 2);
+          var compResult =
+            target === items[middle]
+              ? "bingo"
+              : target > items[middle]
+              ? "right"
+              : "left";
+
+          if (compResult === "bingo") {
+            return target;
+          } else if (compResult === "left") {
+            return binarySearch(items, target, begin, middle - 1);
+          } else {
+            return binarySearch(items, target, middle + 1, end);
+          }
+          return "없어...";
+        }
+      }
+      var arr = [10, 20, 30, 40, 50];
+      console.log(binarySearch(arr, 40, 0, arr.length - 1));
+    </script>
+  </body>
+</html>

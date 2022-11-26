@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+
+  <body>
+    <div id="demo"></div>
+    <div id="reverseDemo"></div>
+    <script>
+      function printChars(str) {
+        if (str.length === 0) {
+          return;
+        } else {
+          console.log(str.charAt(0));
+          printChars(str.substring(1));
+        }
+      }
+    </script>
+    <!-- 연습 -->
+    <script>
+      function printReverseChars(str) {
+        if (str.length === 0) {
+          return;
+        } else {
+          printReverseChars(str.substring(1));
+          console.log(str.charAt(0));
+        }
+      }
+
+      console.log(printChars("wakeup!@#"));
+      console.log(printReverseChars("wakeup!@#"));
+    </script>
+    <!-- 연습 -->
+    <script>
+      // 연습
+      function reverseStr(str) {
+        if (str.length === 0) {
+          return 0;
+        } else {
+          reverseStr(str.substring(1));
+          console.log(str[0]);
+        }
+      }
+      reverseStr("love");
+    </script>
+  </body>
+</html>

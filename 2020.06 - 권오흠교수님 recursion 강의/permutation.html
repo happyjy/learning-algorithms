@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var arr = [];
+
+      function solution(str, point, length) {
+        str = str.toString();
+
+        if (point == length) {
+          // highlight-line // POINT3
+          arr.push(str);
+        } else {
+          for (var cursor = point; cursor <= length; cursor++) {
+            str = swap(str, point, cursor); // highlight-line //POINT2
+            solution(str, point + 1, length); // highlight-line //POINT2
+            str = swap(str, point, cursor); // highlight-line //POINT3
+          }
+        }
+      }
+
+      function swap(str, point, cursor) {
+        let arr = [...str];
+        [arr[point], arr[cursor]] = [arr[cursor], arr[point]];
+
+        return arr.join("");
+      }
+
+      var str = "ABC";
+      solution(str, 0, str.length - 1);
+
+      console.log(arr);
+    </script>
+
+    <script>
+      var str = "ABCD";
+      var result = [];
+      solution(str, 0, str.length - 1);
+      console.log(result);
+
+      function solution(str, b, e) {
+        if (b === e) {
+          result.push(str);
+        } else {
+          for (let i = b; i <= e; i++) {
+            str = swap(str, b, i);
+            solution(str, b + 1, e);
+            str = swap(str, b, i);
+          }
+        }
+      }
+
+      function swap(str, b, e) {
+        var temp = [...str];
+        [temp[b], temp[e]] = [temp[e], temp[b]];
+        return temp.join("");
+      }
+    </script>
+    <script>
+      var str = "ABCD";
+      var result = [];
+      solution(str, 0, str.length - 1);
+      console.log(result);
+
+      function solution(str, cursor, strLen = str.length) {
+        if (cursor === strLen) {
+          //종단점
+          result.push(str);
+        } else {
+          for (let i = cursor; i <= strLen; i++) {
+            str = swap(str, cursor, i);
+            solution(str, cursor + 1, strLen);
+            str = swap(str, cursor, i);
+          }
+        }
+
+        function swap(str, cursor, i) {
+          const temp = [...str];
+          [temp[cursor], temp[i]] = [temp[i], temp[cursor]];
+          return temp.join("");
+        }
+      }
+    </script>
+  </body>
+</html>

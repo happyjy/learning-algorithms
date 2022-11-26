@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*
+      가방수하량: C
+
+      물건무게: weight
+      물건가격: value
+      상점에 있는 물건 개수: n
+    */
+      function knapSack(C, weight, value, n) {
+        // 종료 조건: 남은 물건이 없거나 배낭이 가득 찼을 때
+        if (n <= 0 || C <= 0) {
+          return 0;
+        }
+
+        // n번째 물건의 무게가 C보다 크면 그 물건은 넣을 수 없다.
+        // 하지만 남은 물건 중에 C보다 작은 다른 물건이 있을 수 있어 재귀호출
+        if (weight[n - 1] > C) {
+          return knapSack(C, weight, value, n - 1);
+        }
+
+        // n번째 물건을 배낭에 넣는 경우
+        var carry =
+          value[n - 1] + knapSack(C - weight[n - 1], weight, value, n - 1);
+
+        // n번째 물건을 배낭에 넣지 않는 경우
+        var leave = knapSack(C, weight, value, n - 1);
+
+        return Math.max(carry, leave);
+      }
+
+      var C = 5;
+      var weight = [2, 3, 4, 5];
+      var value = [3, 4, 5, 6];
+      console.log(knapSack(C, weight, value, weight.length));
+    </script>
+
+    <!-- <script>
+      function knapSack(C, weight, value, n) {
+        if (C <= 0 || n <= 0) {
+          return 0;
+        }
+
+        // 못넣는 경우
+        if (weight[n - 1] > C) {
+          return knapSack(C, weight, value, n - 1);
+        }
+
+        // 넣는 경우
+        var take =
+          value[n - 1] + knapSack(C - weight[n - 1], weight, value, n - 1);
+        // 안넣는 경우
+        var leave = knapSack(C, weight, value, n - 1);
+
+        return Math.max(take, leave);
+      }
+
+      var C = 5;
+      var weight = [2, 3, 4, 5];
+      var value = [3, 4, 5, 6];
+      console.log(knapSack(C, weight, value, weight.length));
+    </script> -->
+    <!-- 연습 -->
+    <!-- <script>
+      function knapSack(C, weight, value, n = weight.length) {
+        // 종단점
+        if (n == 0 || C <= 0) {
+          return 0;
+        }
+
+        // 배낭에 물건을 넣지 못하는 경우(물건 무게가 배낭 용량보다 클때)(재귀)
+        if (C < weight[n - 1]) {
+          return knapSack(C, weight, value, n - 1);
+        }
+        // 배낭에 물건을 넣는 경우(물건 무게가 배낭 용량보다 작을때) (재귀)
+        var carry =
+          value[n - 1] + knapSack(C - weight[n - 1], weight, value, n - 1);
+        // 배낭에 물건을 넣지 않는 경우
+        var leave = knapSack(C, weight, value, n - 1);
+
+        return Math.max(carry, leave);
+      }
+
+      var C = 5; // 배낭 용량
+      var weight = [2, 3, 4, 5]; // 물건 무게
+      var value = [3, 4, 5, 6]; // 물건 가격
+      var n = weight.length; // 물건 개수
+
+      console.log(knapSack(C, weight, value, n)); // 7 (무게 2 + 3)
+    </script> -->
+    <!-- 연습 -->
+    <!-- <script>
+      function knapSack(C, weight, value, n = weight.length) {
+        // 종단점
+        if (C <= 0 || n == 0) {
+          return 0;
+        }
+        // 배낭에 물건을 넣지 못하는 경우(물건 무게가 배낭 용량보다 클때)(재귀)
+        if (C < weight[n]) {
+          return knapSack(C, weight, value, n - 1);
+        }
+        // 배낭에 물건을 넣는 경우(물건 무게가 배낭 용량보다 작을때) (재귀)
+        var carry =
+          value[n - 1] + knapSack(C - weight[n - 1], weight, value, n - 1);
+        // 배낭에 물건을 넣지 않는 경우
+        var leave = knapSack(C, weight, value, n - 1);
+
+        return Math.max(carry, leave);
+      }
+
+      var C = 5; // 배낭 용량
+      var weight = [2, 3, 4, 5]; // 물건 무게
+      var value = [3, 4, 5, 6]; // 물건 가격
+      var n = weight.length; // 물건 개수
+
+      console.log(knapSack(C, weight, value, n)); // 7 (무게 2 + 3)
+    </script> -->
+  </body>
+</html>

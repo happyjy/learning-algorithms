@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /* 
+      # 철근길이 0인경우가 없을때 풀이 법
+      var barArr = [1, 5, 8, 9, 10, 17, 17, 20];
+
+      barArr, maxValues 배열 순회 index(i, j)가 철근 길이와 같지 않아 
+      2중 순회 안 maxValues 구하는 과정에 아래와 같이 maxValues[i - j - 1], (i + 1) - j <= 0 여부 판단 하는 로직이 추가 됐다. 
+      => (i - j <= 0 ? 0 : maxValues[i - j - 1]))
+
+      그리고 함수 return value에 maxValue 배열에 N-1 index 요소를 반환해야 한다.
+    */
+
+      function MaxValue(barArr, N) {
+        // barArr: "철근 길이 단위 이익" 보관 배열 (index = 0 -> 길이 1)
+        // maxValues: "철근 길이 단위 최대 이익" 보관 배열 (index = 0 -> 길이 1)
+        let maxValues = new Array(N).fill(0);
+
+        for (let i = 0; i < N; i++) {
+          for (let j = 0; j <= i; j++) {
+            // i+1: bar 길이
+            // j+1: 철근 자른 길이(i(bar 길이) 범위 내)
+            // maxValues에 철근이 0인 경우 배열값은 가지고 있지 않다.
+            /* 
+            i = 0 -> 철근길이(i+1) = 1
+            j = 0 -> 철근 길이 0 자름.
+            maxValues[i], barArr[j] + (i - j <= 0 ? 0 : maxValues[i - j - 1]) => 철근길이(i+1)에서 j 철근길이 만큼 자른다.
+            maxValues[0], barArr[0](철근길이 1) + maxValues[0 - 0 - 1] ( maxValues[-1] ) => 철근길이가 0일 때 maxValues
+
+            i = 1 -> 철글길이(i+1) = 2
+            j = 0, 1 -> 철근 길이 0, 1 자름. 
+            maxValues[i], barArr[j] + (i - j <= 0 ? 0 : maxValues[i - j - 1])
+
+            maxValues[1], barArr[0](철근길이 1) + maxValues[1 - 0 - 1] ( maxValues[0]  ) -> 철근길이가 1일 때 maxValues
+            maxValues[1], barArr[1](철근길이 2) + maxValues[1 - 1 - 1] ( maxValues[-1] )
+
+            i = 2 -> 철글길이(i+1) = 3
+            j = 0, 1, 2 -> 철근 길이 0, 1, 2 자름. 
+            maxValues[i], barArr[j] + (i - j <= 0 ? 0 : maxValues[i - j - 1])
+            maxValues[2], barArr[0](철근길이 1) + maxValues[2 - 0 - 1] ( maxValues[1]  ) -> 철근길이가 2일 때 maxValues
+            maxValues[2], barArr[1](철근길이 2) + maxValues[2 - 1 - 1] ( maxValues[0]  ) -> 철근길이가 1일 때 maxValues
+            maxValues[2], barArr[2](철근길이 3) + maxValues[2 - 2 - 1] ( maxValues[-1] )
+          */
+            maxValues[i] = Math.max(
+              maxValues[i],
+              barArr[j] + (i - j <= 0 ? 0 : maxValues[i - j - 1])
+            );
+          }
+        }
+
+        return maxValues[N - 1];
+      }
+      var barArr = [1, 5, 8, 9, 10, 17, 17, 20];
+      console.log(MaxValue(barArr, barArr.length));
+    </script>
+
+    <!-- 연습 -->
+    <script>
+      var a;
+      function MaxValue(barArr, N) {
+        let maxPrice = Array(N).fill(0);
+        for (var i = 1; i <= barArr.length; i++) {
+          for (var j = 1; j <= i; j++) {
+            maxPrice[i] = Math.max(maxPrice[i], barArr[j] + maxPrice[i - j]);
+          }
+        }
+
+        a = maxPrice;
+        return maxPrice[N - 1];
+      }
+      var barArr = [0, 1, 5, 8, 9, 10, 17, 17, 20];
+      console.log(MaxValue(barArr, barArr.length));
+    </script>
+
+    <script>
+      function maxValue(value, N) {
+        let maxValues = Array(value.length).fill(0);
+
+        // # STUDY1
+        // i: 철근 길이 1에서 N까지 계산해 증가
+        for (var i = 1; i <= N; i++) {
+          // # STUDY1
+          // j: 철근 길이 i인 철근은 i길이에 해당되는 가격표까지만 필요
+          console.log(`# 철근길이 ${i} 일때 최대 가격 구하는 중 `);
+          for (var j = 1; j <= i; j++) {
+            // # STUDY2
+            // i-j의 의미 : 원래 철근길이 i에서 길이 j만큼 자른다는 의미
+
+            // # STUDY3
+            // : i-j 길이의 최대 이익(maxValues[i - j])에 j길이 철근의 가격(value[j])을 더하면 i 길이 철근의 판매 가격을 구할 수 있다
+            //    ( == value[j] + maxValues[i - j] )
+            // : 모든 j에 대해서 최댓값을 취하면 길이 i인 철근을 판매할 때의 최대 이익을 구할 수 있다.
+            //    ( Math.max에 대한 설명 )
+            maxValues[i] = Math.max(maxValues[i], value[j] + maxValues[i - j]);
+            // console.log(
+            // `Math.max(maxValues[${i}], value[${j}] + maxValues[${i} - ${j}])`
+            // );
+          }
+          console.log("");
+        }
+
+        return maxValues[N];
+      }
+      var value = [0, 1, 5, 8, 9, 10, 17, 17, 20];
+      console.log(maxValue(value, value.length - 1));
+    </script>
+    <script>
+      /* 
+      # 철근길이 0인경우가 포함 됐을 때 풀이 법
+      var barArr = [0, 1, 5, 8, 9, 10, 17, 17, 20];
+      barArr, maxValues 배열 순회 index(i, j)가 철근 길이와 같아서 순회 안 maxValues 구하는 과정이 쉽다. 
+    */
+      function MaxValue(barArr, N) {
+        // "철근 길이 단위 최대 이익" 보관 배열
+        let maxValues = new Array(N).fill(0);
+        for (let i = 1; i <= N; i++) {
+          for (let j = 1; j <= i; j++) {
+            // i: bar 길이
+            // j: 철근 자른 길이(i(bar 길이) 범위 내)
+            // maxValues: bar길이(i)별 최대 이익
+            maxValues[i] = Math.max(maxValues[i], barArr[j] + maxValues[i - j]);
+          }
+        }
+
+        return maxValues;
+        return maxValues[N];
+      }
+      var barArr = [0, 1, 5, 8, 9, 10, 17, 17, 20];
+      console.log(MaxValue(barArr, barArr.length));
+    </script>
+  </body>
+</html>

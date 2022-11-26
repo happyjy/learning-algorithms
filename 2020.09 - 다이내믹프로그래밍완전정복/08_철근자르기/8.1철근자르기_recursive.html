@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      var barArr = [1, 5, 8, 9, 10, 17, 17, 20];
+      var barArr = [1, 5, 8, 9];
+      console.log(MaxValue(barArr, barArr.length));
+      console.log(MaxValue(barArr, barArr.length + 1));
+      console.log(MaxValue(barArr, barArr.length + 2));
+
+      /* 
+        * barArr[i]
+          - i+1 철근 길이 만큼의 값어치
+        * N
+          - 자른 철근(길이, 갯수 상관없이) 값이 최대 얼마인지 구하고 싶은 "철근길이"
+      */
+
+      function MaxValue(barArr, N) {
+        //종단점
+        if (N <= 0) return 0;
+
+        //init maxPrice: 아래 1부터 N까지 순회 하는
+        let maxPrice = Number.MIN_SAFE_INTEGER;
+
+        //순회 & 재귀호출
+        for (let i = 0; i < N; i++) {
+          //재귀 호출시 N의 범위: N = 1 ~ N (철근길이)
+          //재귀 호출로 철근길이 N을 자를 수 있는 모든 경우의 수를 탐색 할 수 있다.
+
+          if (i === barArr.length) {
+            //i는 구하고 싶은 철근길이라 주어진 철근 길이의에 대한 배열보다 길수 있다.
+            break;
+          }
+          maxPrice = Math.max(
+            maxPrice,
+            barArr[i] + MaxValue(barArr, N - i - 1)
+          );
+        }
+        return maxPrice;
+      }
+    </script>
+
+    <!-- 연습 -->
+    <script>
+      // var barArr = [1, 5, 8, 9, 10, 17, 17, 20];
+      var barArr = [1, 5, 8, 9];
+      console.log(MaxValue(barArr, barArr.length));
+      console.log(MaxValue(barArr, barArr.length + 1));
+      console.log(MaxValue(barArr, barArr.length + 2));
+
+      function MaxValue(barArr, N) {
+        if (N <= 0) {
+          return 0;
+        }
+
+        let MaxPrice = 0;
+        for (var i = 0; i < N; i++) {
+          if (i === barArr.length) {
+            break;
+          }
+          MaxPrice = Math.max(
+            MaxPrice,
+            barArr[i] + MaxValue(barArr, N - i - 1)
+          );
+        }
+
+        return MaxPrice;
+      }
+    </script>
+
+    <!-- 재귀호출 단계 콘솔 로그 찍은 코드 -->
+    <!-- <script>
+
+    //barArr: 철근
+    //N: 철근 길이
+    function maxValue(barArr, N) {
+      // 종료 조건: 남은 철근 없을때
+      if (N <= 0) return 0;
+
+      // 최대이익 보관 변수
+      // var maxPrice = Number.MIN_SAFE_INTEGER;
+      var maxPrice = 0;
+
+      // 문제 풀이 
+      for (let i = 0; i < N; i++) {
+        maxPrice = Math.max(maxPrice, barArr[i] + maxValue(barArr, N - 1 - i));
+        if (maxPrice === 22) {
+          console.log(`N: ${N}, i: ${i}, maxPrice: ${maxPrice}, Math.max(maxPrice, barArr[i] + maxValue(barArr, N - 1 - i): ${Math.max(maxPrice, barArr[i] + maxValue(barArr, N - 1 - i))}`)
+          console.log(`barArr[i]: ${barArr[i]}, maxValue(barArr, N - 1 - i) :${maxValue(barArr, N - 1 - i)} maxPrice: ${maxPrice}`)
+          console.log("---")
+
+        }
+      }
+
+      return maxPrice;
+    }
+
+    //철근 길이별 가격
+    //length 8
+    var barArr = [1, 5, 8, 9, 10, 17, 17, 20];
+    // var barArr = [0, 1, 5];
+    console.log(maxValue(barArr, barArr.length));
+
+  </script> -->
+  </body>
+</html>

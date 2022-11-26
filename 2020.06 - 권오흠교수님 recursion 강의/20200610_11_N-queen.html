@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*
+      # N-Queens
+        * NxN의 체스판에 N개의 퀸을 서로 공격하지 않게 놓는 방법 혹은 그 수를 구하는 문제
+
+        * https://www.youtube.com/watch?v=xKGbWC-DPT4&list=PL52K_8WQO5oUuH06MLOrah4h05TZ4n38l&index=6
+        * https://dheldh77.tistory.com/373
+        * https://dheldh77.tistory.com/154
+
+      * 1row - 1Queen
+      * Backtracking - 결정내려가다 막다른길에 도달하면 가장 최근에 내렸던 결정을 취소하고 다른 선택을 한다.
+      * 상태공간 트리
+
+
+      * p86
+        - 매개변수: 현재 트리의 어떤 노드에 있는지를 정해야한다.
+        - queens 함수에 도달: 어떤 노드에 도달한 순간
+        - 함수안 로직: 도달한 노드에서 어떤 작업을 해줘야하는지를 작성하면 된다.(다음 노드로 가도 되는지 여부(queen끼리 충돌하는지.)
+          - non-promising: 다음 노드로 가지 않는다.(queen끼리 충돌)
+          - success
+          - visit children recursivbly
+
+      * p87
+        - level: node의 레벨 (p.95 참고)
+        - cols[i]: 첫번째 로우에  queens가 "열번호"
+          cols[i]: 두번째 로우에 2번위치 queens
+
+      * p91
+        - 자식노드를 recursive하게 접근/선택 가능여부 로직
+
+      * p92
+        - promising Test
+
+      * P93
+        - queen끼리 부딪힐 케이스 처리
+        - 같은열, 같은 대각선
+    */
+    </script>
+
+    <!-- 연습 -->
+    <script>
+      /* 
+        # POINT: cols 배열의 의미
+          * row별 말들이 놓이 column
+          * 예) cols = [2,4,1,3] 의미
+            - 첫번째 행에는 두번째 열에 퀸
+            - 두번째 행에는 네번째 열에 퀸
+            - 세번째 행에는 첫번째 열에 퀸
+            - 네번째 행에는 세번째 열에 퀸
+      */
+      var nQueensArr = [];
+      var Nsize;
+      var cnt;
+
+      function queens(level) {
+        // debugger;
+        if (!promissing(level)) {
+          return false;
+        } else if (level === Nsize) {
+          // # POINT: 종단점 - 체스판 마지막 row에 도착 했을 때
+          nQueensArr.shift();
+          console.log(nQueensArr.toString());
+          return true;
+        }
+
+        //# visit chidren recursively: promissing을 통과해야 아래 로직을 수행
+        //# 마지막 퀸 말은 앞에 있는 말들이 놓여있지 않은 곳에 위치하면된다(앞에 있는 말들이 서로 공격안하는 포지션에 위치했으니까)
+        for (let i = 1; i <= Nsize; i++) {
+          nQueensArr[level + 1] = i;
+          // level+1번째 말을 각각의 열에 놓은 후 recursion을 호출
+          if (queens(level + 1)) {
+            break;
+            /* 
+              # POINT: return 하지 않는다! 
+                * return 하면 dfs(깊이우선탐색)이 끝나 버린다. 
+                  * 그리서, queens에 true나오는 조건(level === n)도달하면 끝내야 한다.
+                * 즉 한가지 경우의 n-queens밖에 구하지 못한다. 
+            */
+          }
+        }
+        return false;
+      }
+
+      // 퀸 말들이 row마다 공격 할 수 없는 위치인지 확인
+      /* 
+        * 행 요소 
+          - 배열 index
+        * 열 요소
+          - 배열 값
+      */
+      function promissing(level) {
+        for (let i = 1; i < level; i++) {
+          if (nQueensArr[i] == nQueensArr[level]) {
+            //같은 열에 놓였는지 검사
+            return false;
+            // # abs: 절대값
+          } else if (level - i == Math.abs(nQueensArr[level] - nQueensArr[i])) {
+            // 같은 대각선에 놓였는지 검사
+            /*
+              # POINT: 대간선에 놓여 있는 위치여부 판단 방법
+                -  가로, 세로 길이가 같으면 대각선에 놓인 것
+
+                * level - i
+                  - 세로 길이 
+                * cols[level] - cols[i]
+                  - 가로 길이
+                  
+                * row2 - row1 = |col2 - col1| 
+                  - row는 row2가 항상 크니까 절대값 필요 x
+                  - col은 col2 > col1 될 수 도 있어 절대값 필요.
+                  - (row2 - row1), (|col2 - col1|)이 같으면 대각선상에 놓여 있는 것
+                * 예) 위치에 놓여져 있는 말 사이의 가로, 세로 길이는?
+                  - (row, col) => (0,3) (1,2)
+                  - 1-0 = |2-3|
+            */
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function solution(level) {
+        var answer = 0;
+        //# level: row index
+        Nsize = level;
+        // cols = [...Array(level)]; //queens가 놓이는 위치(array index = row level, 요소 = column )
+        queens(0);
+      }
+
+      console.log(solution(4));
+    </script>
+
+    <!-- 연습 -->
+    <script>
+      let colsArr = [];
+      let n1;
+      let count;
+
+      function queens(level) {
+        // 유효성 검사
+        if (!promissing(level)) {
+          return false;
+        } else if (level === n1) {
+          colsArr.shift();
+          console.log(colsArr.toString());
+          return true;
+        }
+
+        // recursion
+        for (let i = 1; i <= n1; i++) {
+          colsArr[level + 1] = i;
+          if (queens(level + 1)) {
+            break;
+          }
+        }
+
+        return false;
+      }
+
+      // 퀸을 놓을 수 있는 여부 확인
+      function promissing(level) {
+        // 놓여있는 퀸을 대상으로 모두 비교
+        for (let i = 1; i < level; i++) {
+          if (colsArr[i] == colsArr[level]) {
+            // 같은 열 확인
+            return false;
+          } else if (level - i == Math.abs(colsArr[i] - colsArr[level])) {
+            // 대각선 위치 확인(두 퀸의 가로, 세로 )
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function solution(level) {
+        var answer = 0;
+        n1 = level;
+        debugger;
+        queens(0);
+      }
+
+      solution(4);
+    </script>
+
+    <!-- 연습 -->
+    <script>
+      var Nsize;
+      let queensArr = [];
+
+      function queens(level) {
+        if (!promissing(level)) {
+          return false;
+        } else if (level === Nsize) {
+          queensArr.shift();
+          console.log(queensArr.toString());
+          return true;
+        }
+
+        for (let i = 1; i <= Nsize; i++) {
+          queensArr[level + 1] = i;
+          if (queens(level + 1)) {
+            break;
+          }
+        }
+        return false;
+      }
+
+      function promissing(level) {
+        for (let i = 1; i < level; i++) {
+          if (queensArr[level] == queensArr[i]) {
+            return false;
+          } else if (level - i == Math.abs(queensArr[i] - queensArr[level])) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function solution(level) {
+        var answer;
+        Nsize = level;
+        queens(0);
+      }
+      solution(4);
+    </script>
+
+    <script>
+      var Nsize;
+      var nQueensArr = [];
+
+      function queens(level) {
+        // backtracking!
+        if (!promissing(level)) {
+          return false;
+        } else if (level === Nsize) {
+          nQueensArr.shift();
+          console.log(nQueensArr.toString());
+          return true;
+        }
+
+        for (let i = 1; i <= Nsize; i++) {
+          nQueensArr[level + 1] = i;
+          if (queens(level + 1)) {
+            break;
+          }
+        }
+      }
+
+      function promissing(level) {
+        for (let i = 1; i < level; i++) {
+          // 같은 선상에 놓여 있는지 확인
+          if (nQueensArr[i] === nQueensArr[level]) {
+            return false;
+          } else if (level - i == Math.abs(nQueensArr[level] - nQueensArr[i])) {
+            // 대각선에 퀸이 놓였나 확인
+            return false;
+          }
+        }
+        // nqueens에 위배 되는것들은 for문 돌면서 false처리
+        return true;
+      }
+
+      function solution(level) {
+        var answer;
+        Nsize = level;
+        queens(0);
+      }
+      solution(4);
+    </script>
+  </body>
+</html>

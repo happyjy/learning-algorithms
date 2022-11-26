@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!-- 
+      # 최장 공통 부분 수열
+        * 문자열 내에서 왼쪽에서 오른쪽 방향으로 문자열 내에 들어 있는 글자의 수열
+        * 반드시 연속적인 글자들로 구성될 필요 x 
+    -->
+    <script>
+      // var str1 = "ABCD";
+      // var str2 = "AEBD";
+      var str1 = "ACB";
+      var str2 = "ABC";
+      var m = str1.length;
+      var n = str2.length;
+
+      //lcs_length 저장한 캐시
+      var LCSTable = Array(m + 1)
+        .fill(0)
+        .map((v) => Array(n + 1).fill(0));
+
+      console.log(lcs_length(str1, str2, m, n));
+
+      function lcs_length(str1, str2, m, n) {
+        // 종단점: 두문자열 중 하나가 빈 문자열(length == 0)
+        if (m == 0 || n == 0) {
+          return 0;
+        }
+
+        // 캐시단계
+        if (!!LCSTable[m][n]) {
+          return LCSTable[m][n];
+        }
+
+        // 문자열 마지막 글자를 비교해 조건에 따라 재귀 호출
+        if (str1[m - 1] == str2[n - 1]) {
+          LCSTable[m][n] = 1 + lcs_length(str1, str2, m - 1, n - 1);
+        } else {
+          LCSTable[m][n] = Math.max(
+            lcs_length(str1, str2, m, n - 1),
+            lcs_length(str1, str2, m - 1, n)
+          );
+        }
+
+        return LCSTable[m][n];
+      }
+    </script>
+
+    <!-- 연습 -->
+    <script>
+      // var str1 = "ABCD";
+      // var str2 = "AEBD";
+      var str1 = "ACB";
+      var str2 = "ABC";
+      var m = str1.length;
+      var n = str2.length;
+      var Table = Array(m + 1)
+        .fill(0)
+        .map(() => Array(n + 1).fill(0));
+
+      console.log(lcs_length(str1, str2, str1.length, str2.length));
+
+      function lcs_length(str1, str2, m, n) {
+        if (m === 0 || n === 0) {
+          return 0;
+        }
+
+        // // 캐시단계
+        // if (!!Table[m][n]) {
+        //   return Table[m][n];
+        // }
+
+        if (str1[m - 1] === str2[n - 1]) {
+          Table[m][n] = 1 + lcs_length(str1, str2, m - 1, n - 1);
+        } else {
+          Table[m][n] = Math.max(
+            lcs_length(str1, str2, m, n - 1),
+            lcs_length(str1, str2, m - 1, n)
+          );
+        }
+
+        return Table[m][n];
+      }
+    </script>
+    <!-- 연습 -->
+    <!-- <script>
+      // var str1 = "ABCD";
+      // var str2 = "AEBD";
+      var str1 = "ACB";
+      var str2 = "ABC";
+      var m = str1.length;
+      var n = str2.length;
+      var cache = Array(m + 1)
+        .fill(0)
+        .map((v) => Array(n + 1).fill(0));
+      console.log(lcs_length(str1, str2));
+
+      function lcs_length(str1, str2, m = str1.length, n = str2.length) {
+        if (m === 0 || n === 0) {
+          return 0;
+        }
+
+        if (str1[m - 1] === str2[n - 1]) {
+          cache[m][n] = 1 + lcs_length(str1, str2, m - 1, n - 1);
+        } else {
+          cache[m][n] = Math.max(
+            lcs_length(str1, str2, m - 1, n),
+            lcs_length(str1, str2, m, n - 1)
+          );
+        }
+
+        return cache[m][n];
+      }
+    </script> -->
+    <!-- 연습 -->
+    <!--
+    <script>
+
+
+      var str1 = "ABCD";
+      var str2 = "AEBD";
+      // var str1 = 'ACB';
+      // var str2 = 'ABC';
+      var m = str1.length;
+      var n = str2.length;
+
+      var LCSTable = Array(m + 1)
+        .fill(0)
+        .map((v) => Array(n + 1).fill(0));
+
+      console.log(lcs_length(str1, str2));
+
+      function lcs_length(str1, str2, m = str1.length, n = str2.length) {
+        if (m === 0 || n === 0) {
+          return 0;
+        }
+
+        if (!!LCSTable[m][n]) {
+          // console.log("# LCSTable[m][n]: ", LCSTable[m][n]);
+          // console.log({ m, n });
+          // console.log({ m: str1.slice(0, m + 1), n: str2.slice(0, n + 1) });
+          return LCSTable[m][n];
+        }
+
+        if (str1[m - 1] == str2[n - 1]) {
+          LCSTable[m][n] = 1 + lcs_length(str1, str2, m - 1, n - 1);
+        } else {
+          LCSTable[m][n] = Math.max(
+            lcs_length(str1, str2, m, n - 1),
+            lcs_length(str1, str2, m - 1, n)
+          );
+        }
+        return LCSTable[m][n];
+      }
+
+    </script> -->
+  </body>
+</html>

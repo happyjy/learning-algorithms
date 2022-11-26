@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // # 거스름돈 최적화[탐욕알고리즘]
+      // * 거스름돈 액수 마다 최소로 줄수 있는 코인 개수
+      // recursion으로 주어진 코인[50, 10, 5, 1]으로 모든 금액을 만들 수 있다.(모든 금액의 거스름돈을 만들 수 있다.)
+
+      // # 1원이 있으면 거스를수 없는 액수가 발생하지 않는다.
+      //  : == 화폐단위가 당연하게 모든 금액 수를 만들 수 있어야 하기에 최소 단위는 1이 있어야 한다.
+
+      // # resultArr[S] = result 시기는
+      //  : for문이 i가 N-1 까지 도달한후에 수행힌다.
+      //    (즉 여기서는 거스름돈 1원일때)
+
+      /*
+       * N: 동전 종류
+       * C: 거슬러줄 금액
+       */
+
+      var maxNum = Number.MAX_SAFE_INTEGER;
+      var cacheArr = [];
+
+      function minCoins(coin, N, S) {
+        if (S == 0) return 0;
+
+        // cache
+        if (!!cacheArr[S]) return cacheArr[S];
+
+        var result = maxNum;
+        // 최소값을 저장하는 변수
+        for (var i = 0; i < N; i++) {
+          // 액면가가 S보다 같거나 작은 모든 동전에 대해서 재귀호출
+          if (coin[i] <= S) {
+            console.log({ 거스름돈: S, i, coin: coin[i] });
+            var gettingMinCoinWay = minCoins(coin, N, S - coin[i]);
+
+            // 지금까지 최솟값보다 더 작으면 최소값 교체
+            // # study - 이 부분이 이해하기 어렵다.
+            // 예를 들어 S가 (거스름돈이 5일 경우) 거스름돈 받을 수 있는 방법이 2가지 =>
+            //  1. 4원을 거스르는 최소 코인, 2. 5원으로 바로 거스르는 방법 1가지.
+            if (gettingMinCoinWay + 1 < result) {
+              result = gettingMinCoinWay + 1;
+            }
+            // console.log({ 거스름돈: S, i, coin: coin[i], result });
+          }
+        }
+        cacheArr[S] = result;
+        console.log(`# 거스름돈 ${S}의 최소 코인 개수 ${result}`);
+        return result;
+      }
+
+      var coinArr = [50, 10, 5, 1];
+      var coinArrLen = coinArr.length;
+      var S = 65;
+      console.log(minCoins(coinArr, coinArrLen, S));
+    </script>
+
+    <!-- 연습 -->
+    <script>
+      var maxNum = Number.MAX_SAFE_INTEGER;
+      var cacheArr = [];
+
+      function minCoins(coinArr, coinArrLen, S) {
+        if (S == 0) {
+          return 0;
+        }
+
+        // cache
+        if (cacheArr[S]) {
+          return cacheArr[S];
+        }
+
+        var result = maxNum;
+        for (var i = 0; i < coinArrLen; i++) {
+          if (coinArr[i] <= S) {
+            var temp = minCoins(coinArr, coinArrLen, S - coinArr[i]);
+            if (temp + 1 < result) result = temp + 1;
+          }
+        }
+        cacheArr[S] = result;
+        return result;
+      }
+
+      var coinArr = [50, 10, 5, 1];
+      var coinArrLen = coinArr.length;
+      var S = 65;
+      console.log(minCoins(coinArr, coinArrLen, S));
+    </script>
+
+    <script>
+      var cacheArr = [];
+
+      function minCoins(coinArr, coinArrLen, S) {
+        if (S === 0) {
+          return 0;
+        }
+
+        if (cacheArr[S]) {
+          return cacheArr[S];
+        }
+
+        var result = Number.MAX_SAFE_INTEGER;
+
+        for (var i = 0; i < coinArrLen; i++) {
+          var gettingMinCoinWay = minCoins(coinArr, coinArrLen, S - coinArr[i]);
+          if (gettingMinCoinWay + 1 < result) {
+            result = gettingMinCoinWay + 1;
+          }
+        }
+
+        cacheArr[S] = result; // 자식노드가 for문에 모두 순회한뒤 최종 반환하는 result 값(최소값)을 캐시 배열에 넣는다.
+
+        return result;
+      }
+
+      var coinArr = [50, 10, 5, 1];
+      var coinArrLen = coinArr.length;
+      var S = 65;
+      console.log(minCoins(coinArr, coinArrLen, S));
+    </script>
+  </body>
+</html>

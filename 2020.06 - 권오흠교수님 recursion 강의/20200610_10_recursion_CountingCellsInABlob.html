@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="demo"></div>
+    <script>
+      var BACKGROUND_COLOR = 0;
+      var IMAGE_COLOR = 1;
+      var ALREADY_COUNTED = "@";
+      var N = 8;
+      var grid = [
+        [1, 0, 0, 0, 0, 0, 0, 1],
+        [0, 1, 1, 0, 0, 1, 0, 0],
+        [1, 1, 0, 0, 1, 0, 1, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0],
+        [0, 1, 0, 1, 0, 1, 0, 0],
+        [0, 1, 0, 1, 0, 1, 0, 0],
+        [1, 0, 0, 0, 1, 0, 0, 1],
+        [0, 1, 1, 0, 0, 1, 1, 1],
+      ];
+
+      function countCells(x, y) {
+        if (x < 0 || x >= N || y < 0 || y >= N) {
+          return 0;
+        } else if (grid[x][y] != IMAGE_COLOR) {
+          return 0;
+        } else {
+          // point: 중복으로 카운팅 하는 것을 방지
+          grid[x][y] = ALREADY_COUNTED;
+          return (
+            1 +
+            //북, 북동, 동, 동남, 남, 남서, 서, 북서,
+            (countCells(x, y + 1) +
+              countCells(x + 1, y + 1) +
+              countCells(x + 1, y) +
+              countCells(x + 1, y - 1) +
+              countCells(x, y - 1) +
+              countCells(x - 1, y - 1) +
+              countCells(x - 1, y) +
+              countCells(x - 1, y + 1))
+          );
+        }
+      }
+      console.log(countCells(1, 1));
+
+      // function printGrid() {
+      //   grid.forEach((v) => {
+      //     console.log(v.toString());
+      //     console.log("----------");
+      //   });
+      // }
+      // printGrid();
+      // let gridBlob = 0;
+      // grid.forEach((row) => {
+      //   row.forEach((cell) => {
+      //     if (cell === "@") gridBlob++;
+      //   });
+      // });
+    </script>
+
+    <!-- 연습 -->
+    <script>
+      var BACKGROUND_COLOR = 0;
+      var IMAGE_COLOR = 1;
+      var ALREADY_COUNTED = "@";
+      var N = 8;
+      var grid = [
+        [1, 0, 0, 0, 0, 0, 0, 1],
+        [0, 1, 1, 0, 0, 1, 0, 0],
+        [1, 1, 0, 0, 1, 0, 1, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0],
+        [0, 1, 0, 1, 0, 1, 0, 0],
+        [0, 1, 0, 1, 0, 1, 0, 0],
+        [1, 0, 0, 0, 1, 0, 0, 1],
+        [0, 1, 1, 0, 0, 1, 1, 1],
+      ];
+
+      function countCells(x, y) {
+        if (x < 0 || y < 0 || y >= N || x >= N) {
+          // 범위확인
+          return 0;
+        } else if (grid[x][y] != IMAGE_COLOR) {
+          // 이미지 컬러 아닌경우
+          return 0;
+        } else {
+          // 범위안, 이미지 컬러인 경우
+          grid[x][y] = ALREADY_COUNTED;
+          return (
+            1 +
+            (countCells(x, y + 1) +
+              countCells(x + 1, y + 1) +
+              countCells(x + 1, y) +
+              countCells(x + 1, y - 1) +
+              countCells(x, y - 1) +
+              countCells(x - 1, y - 1) +
+              countCells(x - 1, y) +
+              countCells(x - 1, y + 1))
+          );
+        }
+      }
+
+      console.log(countCells(5, 5));
+    </script>
+
+    <!-- 연습 -->
+    <script>
+      var BACKGROUND_COLOR = 0;
+      var IMAGE_COLOR = 1;
+      var ALREADY_COUNTED = "@";
+      var N = 8;
+      var grid = [
+        [1, 0, 0, 0, 0, 0, 0, 1],
+        [0, 1, 1, 0, 0, 1, 0, 0],
+        [1, 1, 0, 0, 1, 0, 1, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0],
+        [0, 1, 0, 1, 0, 1, 0, 0],
+        [0, 1, 0, 1, 0, 1, 0, 0],
+        [1, 0, 0, 0, 1, 0, 0, 1],
+        [0, 1, 1, 0, 0, 1, 1, 1],
+      ];
+
+      function countCells(x, y) {
+        if (x < 0 || y < 0 || y >= N || x >= N) {
+          // 범위 확인
+          return false;
+        } else if (grid[x][y] != IMAGE_COLOR) {
+          // 이미지 색 아닌경우
+          return false;
+        } else {
+          // 이미지 색
+          grid[x][y] = ALREADY_COUNTED;
+          return (
+            1 +
+            countCells(x, y + 1) +
+            countCells(x + 1, y + 1) +
+            countCells(x + 1, y) +
+            countCells(x + 1, y - 1) +
+            countCells(x, y - 1) +
+            countCells(x - 1, y - 1) +
+            countCells(x - 1, y) +
+            countCells(x - 1, y + 1)
+          );
+        }
+      }
+
+      console.log(countCells(5, 5));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // 순차탐색(주어진 배열 요소가 몇번째 인지 확인하기)
+      // #방법 1. 매개변수의 명시화(recursion)
+      // #방법 2. binary search와 비슷한 방법
+      // #방법 3. 배열사용
+
+      var arr = [1, 2, 3, 4, 5];
+      // #방법 1. 매개변수의 명시화(recursion)
+      function searchRecursion(arr, begin, end, target) {
+        if (begin > end) {
+          return false;
+        } else if (target === arr[begin]) {
+          return begin;
+        } else {
+          return searchRecursion(arr, begin + 1, end, target);
+        }
+      }
+      console.log(searchRecursion(arr, 0, arr.length - 1, 4));
+
+      // #방법 2. binary search와 비슷한 방법
+      function binarySearch(arr, begin, end, target) {
+        if (begin > end) {
+          return false;
+        } else {
+          const middle = Math.floor((begin + end) / 2);
+          if (arr[middle] === target) {
+            return middle;
+          }
+
+          // 1. 반으로 나눴을때 "왼쪽 부분 탐색"
+          const index = binarySearch(arr, begin, middle - 1, target);
+          if (index != false) {
+            return index;
+          } else {
+            // 2. 반으로 나눴을때 "오른쪽 부분 탐색"
+            return binarySearch(arr, middle + 1, end, target);
+          }
+        }
+      }
+
+      console.log(search(arr, 0, arr.length - 1, 5));
+
+      // #방법 3. 배열사용
+      function search(arr, n, target) {
+        for (var i = 0; i < n; i++) {
+          if (arr[i] === target) {
+            return i;
+          }
+        }
+        return false;
+      }
+      console.log(search(arr, arr.length, 4));
+
+      // 연습
+      function SR(arr, begin, end, target) {
+        if (begin > end) {
+          return false;
+        } else if (target === arr[begin]) {
+          return begin;
+        } else {
+          return SR(arr, begin + 1, end, target);
+        }
+      }
+      console.log(SR(arr, 0, arr.length, 5));
+    </script>
+  </body>
+</html>

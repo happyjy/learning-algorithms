@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      function numOfPaths(m, n) {
+        // 종료 조건
+        if (m == 0 && n == 0) {
+          // 방 (0, 0)
+          return 0;
+        }
+
+        if (m == 0 || n == 0) {
+          //첫 번째 행 또는 첫번째 열
+          return 1;
+        }
+
+        return numOfPaths(m - 1, n) + numOfPaths(m, n - 1);
+      }
+
+      console.log(numOfPaths(2, 3));
+    </script>
+
+    <script>
+      function numOfPaths(m, n) {
+        if (m === 0 && n === 0) {
+          return 0;
+        }
+
+        if (m === 0 || n === 0) {
+          return 1;
+        }
+
+        return numOfPaths(m - 1, n) + numOfPaths(m, n - 1);
+      }
+      console.log(numOfPaths(2, 3));
+    </script>
+
+    <script>
+      function numOfPaths(m, n) {
+        if (m === 0 && n === 0) {
+          return 0;
+        }
+
+        if (m === 0 || n === 0) {
+          return 1;
+        }
+
+        return numOfPaths(m - 1, n) + numOfPaths(m, n - 1);
+      }
+      console.log(numOfPaths(2, 3));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /* 
+        # 최소 교정 비용 문제
+
+        * 두 단어의 한글자씩 바꿀수 있는 방법: 삽입, 삭제, 치환
+        * 두 단어간의 교정 비용은 한 단어에서 다른 단어로 바꾸는데 필요한 글자 연산의 횟수로 정의
+        
+
+        +: 추가, @: 교환
+        
+        S     U N D A Y
+          + +   @           
+        S A T U R D A Y
+
+    */
+      var stackcount = 0;
+      function editDistance(str1, str2) {
+        if (!str1) {
+          return str2.length;
+        }
+
+        if (!str2) {
+          return str1.length;
+        }
+
+        // 첫글자 같을 때
+        if (str1[0] == str2[0]) {
+          return editDistance(str1.substr(1), str2.substr(1)); // highlight-line
+        }
+
+        // 삭제, 치환 연산 recursion
+        var d, u, i;
+        // 삭제 연산
+        // : 실제로 삭제하는 대신 str의 첫번째 글자를 제외한다.
+        // : 그리고, 두 문자열의 최소 교정 비용을 구한다.
+        d = editDistance(str1.substr(1), str2); // highlight-line
+
+        // 치환 연산
+        // : 치환하면 첫번째 글자가 같아지므로 두 문자열의 첫번재 글자를 제외한다.
+        // : 그래서, 실제 치환하는대신 두 문자열(str, str2)의 두번째 문자부터의 최소교정 비용을 구한다.
+        u = editDistance(str1.substr(1), str2.substr(1)); // highlight-line
+
+        // 삽입 연산
+        // : 실제로 삽입하는 대신 str2의 첫번째 글자를 제외한다.
+        // : 그리고, 두 문자열의 최소 교정 비용을 구한다.
+        i = editDistance(str1, str2.substr(1)); // highlight-line // POINT1
+
+        ++stackcount;
+        return Math.min(d, u, i) + 1;
+      }
+
+      // var str1 = "SUNDAY";
+      // var str2 = "SATURDAY";
+
+      // var str1 = "CAT";
+      // var str2 = "DOG";
+
+      var str1 = "CA";
+      var str2 = "DO";
+
+      // b,c가 남았을때 치환하면 최소비용으로 두 문자를 같게 할 수 있다.
+      // var str1 = "ab";
+      // var str2 = "ac";
+
+      // a가 하나 남으면 삭제, 추가하면된다.
+      // var str1 = "ea";
+      // var str2 = "e";
+
+      var str1 = "CAT";
+      var str2 = "CAR";
+      console.log(editDistance(str1, str2));
+      console.log(stackcount);
+    </script>
+
+    <script>
+      // var str1 = "CAT";
+      // var str2 = "CAR";
+      var str1 = "SUNDAY";
+      var str2 = "SATURDAY";
+      console.log(editDistance(str1, str2));
+      function editDistance(str1, str2) {
+        if (!str1) {
+          return str2.length;
+        }
+        if (!str2) {
+          return str1.length;
+        }
+
+        // 앞글자 비교
+        if (str1[0] === str2[0]) {
+          return editDistance(str1.substr(1), str2.substr(1));
+        }
+
+        // 삭제,치환,추가별 교정비용 처리
+        var d, u, i;
+
+        d = editDistance(str1.substr(1), str2);
+        u = editDistance(str1.substr(1), str2.substr(1));
+        i = editDistance(str1, str2.substr(1));
+
+        return Math.min(d, u, i) + 1;
+      }
+    </script>
+    <script>
+      // var str1 = "CAT";
+      // var str2 = "CAR";
+      var str1 = "SUNDAY";
+      var str2 = "SATURDAY";
+      console.log(editDistance(str1, str2));
+      function editDistance(str1, str2) {
+        if (str1 === 0) return str2.length;
+
+        if (str2 === 0) return str1.length;
+
+        if (str1[0] === str2[0]) {
+          return editDistance(str1.substr(1), str2.substr(1));
+        }
+
+        var d, u, i;
+
+        d = editDistance(str1.substr(1), str2);
+        u = editDistance(str1.substr(1), str2.substr(1));
+        i = editDistance(str1, str2.substr(1));
+
+        return Math.min(d, u, i) + 1;
+      }
+    </script>
+  </body>
+</html>

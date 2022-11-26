@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      var barArr = [1, 5, 8, 9, 10, 17, 17, 20];
+      var barArr = [1, 5, 8, 9];
+      var barLenth = 5;
+      let maxValues = Array(barLenth).fill(0);
+      console.log(MaxValue(barArr, barLenth)); // 길이가 barLenth일때 철근을 잘랐을때 최대 없을 수 있는 값
+
+      function MaxValue(barArr, N) {
+        // 종단점
+        if (N <= 0) {
+          return 0;
+        }
+
+        // 이미 계산된 값이 있으면 반환
+        if (maxValues[N - 1] != 0) {
+          return maxValues[N - 1];
+        }
+
+        // memo 전략
+        maxValues[N - 1] = Number.MIN_SAFE_INTEGER;
+
+        //순회/ 재귀호출
+        for (var i = 0; i < N; i++) {
+          //재귀 호출시 N의 범위: N = 0 ~ N-1
+          //재귀 호출로 철근길이 N을 자를 수 있는 모든 경우의 수를 탐색 할 수 있다.
+          if (i == barArr.length) {
+            // i가 N(철근길이) 보다 큰 경우가 있을 수 있다.
+            // 이런 경우 barArr[i]에서 barArr 배열보다 index가 넘을 수 있는 문제가 생길 수 있다.
+            break;
+          }
+          maxValues[N - 1] = Math.max(
+            maxValues[N - 1],
+            barArr[i] + MaxValue(barArr, N - i - 1)
+          );
+        }
+
+        return maxValues[N - 1];
+      }
+
+      // console.log(MaxValue(barArr, barArr.length))
+      // console.log(MaxValue(barArr, barArr.length)); // 길이가 4(barArr.length)인 철근을 잘랐을때 최대 없을 수 있는 값
+    </script>
+
+    <!-- 연습2 -->
+    <!-- cache[N] 으로 하면 0번째 index는 "0"이다. -->
+    <script>
+      // var barArr = [1, 5, 8, 9, 10, 17, 17, 20];
+      var barArr = [1, 5, 8, 9];
+      var cache = Array(barArr.length).fill(0);
+      console.log(MaxValue(barArr, barArr.length));
+      var cache = Array(barArr.length + 1).fill(0);
+      console.log(MaxValue(barArr, barArr.length + 1));
+      var cache = Array(barArr.length + 2).fill(0);
+      console.log(MaxValue(barArr, barArr.length + 2));
+
+      function MaxValue(barArr, N) {
+        if (N <= 0) {
+          return 0;
+        }
+
+        if (cache[N] != 0) {
+          return cache[N];
+        }
+
+        cache[N] = Number.MIN_SAFE_INTEGER;
+
+        for (var i = 0; i < N; i++) {
+          if (barArr.length <= i) {
+            break;
+          }
+
+          cache[N] = Math.max(
+            cache[N],
+            barArr[i] + MaxValue(barArr, N - i - 1)
+          );
+        }
+
+        return cache[N];
+      }
+    </script>
+
+    <!-- 연습1 -->
+    <script>
+      // var barArr = [1, 5, 8, 9, 10, 17, 17, 20];
+      var barArr = [1, 5, 8, 9];
+      var cache = Array(barArr.length).fill(0);
+      console.log(MaxValue(barArr, barArr.length));
+      var cache = Array(barArr.length + 1).fill(0);
+      console.log(MaxValue(barArr, barArr.length + 1));
+      var cache = Array(barArr.length + 2).fill(0);
+      console.log(MaxValue(barArr, barArr.length + 2));
+
+      function MaxValue(barArr, N) {
+        if (N <= 0) {
+          return 0;
+        }
+
+        if (cache[N - 1] != 0) {
+          return cache[N - 1];
+        }
+
+        cache[N - 1] = Number.MIN_SAFE_INTEGER;
+
+        for (var i = 0; i < N; i++) {
+          if (i === barArr.length) {
+            break;
+          }
+
+          cache[N - 1] = Math.max(
+            cache[N - 1],
+            barArr[i] + MaxValue(barArr, N - i - 1)
+          );
+        }
+        return cache[N - 1];
+      }
+    </script>
+    <!-- <script>
+      let maxPriceArr = [];
+      let changePriceArr = [];
+
+      function MaxValue(barArr, N) {
+        // 종단점
+        if (N <= 0) return 0;
+        // init maxPrice
+        // let maxPrice = Number.MIN_SAFE_INTEGER;
+
+        // 이미 계산된 값이 있으면 반환
+        if (!!maxPriceArr[N]) {
+          return maxPriceArr[N];
+        }
+        // memo 전략
+        maxPriceArr[N] = Number.MIN_SAFE_INTEGER;
+
+        //순회/ 재귀호출
+        for (let i = 0; i < N; i++) {
+          // maxPriceArr[N] update 되는 시점
+          if (maxPriceArr[N] > barArr[i] + MaxValue(barArr, N - i - 1)) {
+            debugger;
+            changePriceArr.push({ N, i });
+          }
+          //재귀 호출시 N의 범위: N = 0 ~ N-1
+          //재귀 호출로 철근길이 N을 자를 수 있는 모든 경우의 수를 탐색 할 수 있다.
+          maxPriceArr[N] = Math.max(
+            maxPriceArr[N],
+            barArr[i] + MaxValue(barArr, N - i - 1)
+          );
+        }
+
+        return { maxPrice: maxPriceArr[N], value: maxPriceArr };
+        // return { barArr: maxPriceArr[N], N };
+      }
+
+      var barArr = [1, 5, 8, 9, 10, 17, 17, 20];
+      console.log(MaxValue(barArr, barArr.length));
+    </script>
+    -->
+
+    <!-- 재귀호출 단계 콘솔 로그 찍은 코드 -->
+    <!-- <script>
+
+    //barArr: 철근
+    //N: 철근 길이
+    function maxValue(barArr, N) {
+      // 종료 조건: 남은 철근 없을때
+      if (N <= 0) return 0;
+
+      // 최대이익 보관 변수
+      // var maxPrice = Number.MIN_SAFE_INTEGER;
+      var maxPrice = 0;
+
+      // 문제 풀이 
+      for (let i = 0; i < N; i++) {
+        maxPrice = Math.max(maxPrice, barArr[i] + maxValue(barArr, N - 1 - i));
+        if (maxPrice === 22) {
+          console.log(`N: ${N}, i: ${i}, maxPrice: ${maxPrice}, Math.max(maxPrice, barArr[i] + maxValue(barArr, N - 1 - i): ${Math.max(maxPrice, barArr[i] + maxValue(barArr, N - 1 - i))}`)
+          console.log(`barArr[i]: ${barArr[i]}, maxValue(barArr, N - 1 - i) :${maxValue(barArr, N - 1 - i)} maxPrice: ${maxPrice}`)
+          console.log("---")
+
+        }
+      }
+
+      return maxPrice;
+    }
+
+    //철근 길이별 가격
+    //length 8
+    var barArr = [1, 5, 8, 9, 10, 17, 17, 20];
+    // var barArr = [0, 1, 5];
+    console.log(maxValue(barArr, barArr.length));
+
+  </script> -->
+  </body>
+</html>

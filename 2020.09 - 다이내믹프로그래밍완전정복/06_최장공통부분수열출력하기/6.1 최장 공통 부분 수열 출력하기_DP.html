@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <!-- 최장 공통 부분 수열 구하기 -->
+    <script>
+      // # 최장 공통 부분 수열 값 출력하기
+
+      // # 최장 공통 부분 수열(longest common subsequence)(LCS)
+      //  * 문자열 내에서 왼쪽에서 오른쪽 방향으로 문자열 내에 들어 잇는 글자의 수열
+      //  * 반드시 연속적인 글자들로 구성될 필요 x
+
+      // m: str1.length
+      // n: str2.length
+      function lcs_length(str1, str2, m, n) {
+        var lcsTable = Array(m + 1)
+          .fill(0)
+          .map((v) => Array(n + 1).fill(0));
+
+        // // 첫번째 열 초기화
+        // for (var i = 0; i <= m; i++) {
+        //   lcsTable[i][0] = 0;
+        // }
+
+        // // 첫번째 행 초기화
+        // for (var j = 0; j <= m; j++) {
+        //   lcsTable[0][j] = 0;
+        // }
+
+        for (var i = 1; i <= m; i++) {
+          for (var j = 1; j <= n; j++) {
+            if (str1[i - 1] === str2[j - 1]) {
+              lcsTable[i][j] = lcsTable[i - 1][j - 1] + 1;
+            } else {
+              lcsTable[i][j] = Math.max(lcsTable[i - 1][j], lcsTable[i][j - 1]);
+            }
+          }
+        }
+
+        //
+        var lcsLength = lcsTable[m][n];
+        // LCS를 저장할 문자열
+        var LCS = Array(lcsLength);
+        lcsLength--;
+
+        // 우하단에서 시작
+        var i = m,
+          j = n;
+
+        while (i > 0 && j > 0) {
+          // str1, str2의 현재의 글자가 같으면 LCS에 포함
+          if (str1[i - 1] == str2[j - 1]) {
+            LCS[lcsLength] = str1[i - 1];
+            i--;
+            j--;
+            lcsLength--;
+          } else if (lcsTable[i - 1][j] > lcsTable[i][j - 1]) {
+            //같지 않다면 위쪽 또는 왼쪽 셀의 값 중 큰 값을 따라 이동.
+            i--;
+          } else {
+            j--;
+          }
+        }
+
+        console.log(LCS.join(""));
+
+        return lcsTable[m][n];
+      }
+
+      var str1 = "ABCD";
+      var str2 = "AEBD";
+
+      console.log(lcs_length(str1, str2, str1.length, str2.length));
+    </script>
+    <!-- 최장 공통 부분 수열 출력하기 -->
+    <script>
+      function lcs_length(str1, str2, m = str1.length, n = str2.length) {
+        var lcsTable = Array(m + 1)
+          .fill(0)
+          .map(() => Array(n + 1).fill(0));
+
+        for (var i = 1; i <= m; i++) {
+          for (var j = 1; j <= n; j++) {
+            if (str1[i - 1] === str2[j - 1]) {
+              lcsTable[i][j] = 1 + lcsTable[i - 1][j - 1];
+            } else {
+              lcsTable[i][j] = Math.max(lcsTable[i][j - 1], lcsTable[i - 1][j]);
+            }
+          }
+        }
+
+        var lcsLength = lcsTable[m][n].length;
+        var LCSArr = Array(lcsLength);
+
+        lcsLength--;
+
+        var i = m,
+          j = n;
+
+        while (i > 0 && j > n) {
+          if (str1[i - 1] == str2[j - 1]) {
+            LCSArr[lcsLength] = str2[j - 1];
+            i--;
+            j--;
+          } else if (lcsTable[i - 1][j] > lcsTable[i][j - 1]) {
+            i--;
+          } else {
+            j--;
+          }
+        }
+        return LCSArr.join("");
+      }
+
+      var str1 = "ABCD";
+      var str2 = "AEBD";
+      console.log(lcs_length(str1, str2));
+    </script>
+  </body>
+</html>

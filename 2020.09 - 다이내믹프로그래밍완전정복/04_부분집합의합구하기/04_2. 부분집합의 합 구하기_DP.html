@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      function isSubsetSum(arr, n, X) {
+        // 합이 X인 부분집합이 존재하는지의 결과를 저장해둘 2차원 배열
+        // subsum[i][j]는 arr[0...i-1]의 부분집합 중에 합이 j인
+        // 부분집합이 있으면 true입니다.
+
+        var condition = Array(n)
+          .fill(undefined)
+          .map((v) => Array(X + 1).fill(undefined));
+        var subsum = Array(n)
+          .fill(undefined)
+          .map((v) => Array(X + 1).fill(undefined));
+
+        // for (var i = 0; i < n; i++) {
+        //     for (var j = 0; j <= X; j++) {
+        //         subsum[i][j] = false;
+        //     }
+        // }
+
+        // 첫 번째 열은 항상 참
+        for (var i = 0; i < n; i++) {
+          condition[i][0] = "조건0";
+
+          subsum[i][0] = true;
+        }
+
+        // 첫번째 행은 j가 0 또는 arr[0]인 경우만 참
+        for (var j = 1; j <= X; j++) {
+          condition[0][j] = "조건1";
+
+          if (arr[0] == j) {
+            subsum[0][j] = true;
+          } else {
+            subsum[0][j] = false;
+          }
+        }
+
+        // 나머지셀 채운다.
+        for (var i = 1; i < n; i++) {
+          var v = arr[i];
+          for (var j = 1; j <= X; j++) {
+            if (j < v) {
+              condition[i][j] = "조건2";
+              subsum[i][j] = subsum[i - 1][j];
+            } else if (subsum[i - 1][j]) {
+              condition[i][j] = "조건3";
+              subsum[i][j] = true;
+            } else {
+              condition[i][j] = "조건4";
+              subsum[i][j] = subsum[i - 1][j - v];
+            }
+          }
+        }
+
+        console.log(condition);
+        return subsum[n - 1][X];
+      }
+
+      var arr = [3, 2, 7, 1];
+      console.log(isSubsetSum(arr, arr.length, 6));
+    </script>
+
+    <!-- 연습 -->
+    <script>
+      var arr = [3, 2, 7, 1];
+      console.log(isSubsetSum(arr, arr.length, 6));
+      function isSubsetSum(arr, n, X) {
+        var subsum = Array(n)
+          .fill(undefined)
+          .map((v) => Array(X + 1).fill(undefined));
+
+        for (var i = 0; i < n; i++) {
+          subsum[i][0] = true;
+        }
+
+        // 문제를 작게 나눠서 풀었다.
+        for (var j = 0; j <= X; j++) {
+          if (arr[0] === j) {
+            subsum[0][j] = true;
+          } else {
+            subsum[0][j] = false;
+          }
+        }
+
+        for (var i = 1; i < n; i++) {
+          var num = arr[i];
+          for (var j = 1; j <= X; j++) {
+            if (num > X) {
+              subsum[i][j] = subsum[i - 1][j];
+            } else if (subsum[i - 1][j]) {
+              subsum[i][j] = true;
+            } else {
+              subsum[i][j] = subsum[i - 1][j - num];
+            }
+          }
+        }
+        return subsum[n - 1][X];
+      }
+    </script>
+    <!-- 연습 -->
+    <script>
+      var arr = [3, 2, 7, 1];
+      console.log(isSubsetSum(arr, arr.length, 6));
+      function isSubsetSum(arr, n, X) {
+        var subsum = Array(n)
+          .fill(undefined)
+          .map((v) => Array(X + 1).fill(undefined));
+
+        for (var i = 0; i < n; i++) {
+          subsum[i][0] = true;
+        }
+
+        for (var j = 1; j <= X; j++) {
+          if (arr[0] === j) {
+            subsum[0][j] = true;
+          } else {
+            subsum[0][i] = false;
+          }
+        }
+
+        for (var i = 1; i < n; i++) {
+          var v = arr[i];
+          for (var j = 1; j <= X; j++) {
+            if (j < v) {
+              subsum[i][j] = subsum[i - 1][j];
+            } else if (subsum[i - 1][j]) {
+              subsum[i][j] = true;
+            } else {
+              subsum[i][j] = subsum[i - 1][j - v];
+            }
+          }
+        }
+        return subsum[n - 1][X];
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      function numOfPaths(m, n) {
+        var cache = Array(m)
+          .fill(0)
+          .map((v) => Array(n).fill(0));
+
+        for (var i = 0; i < m; i++) {
+          cache[i][0] = 1;
+        }
+        for (var j = 0; j < n; j++) {
+          cache[0][j] = 1;
+        }
+
+        // 나머지 셀
+        for (var i = 1; i < m; i++) {
+          for (var j = 1; j < n; j++) {
+            cache[i][j] = cache[i - 1][j] + cache[i][j - 1]; // cache[i][j]기준 위 셀 + cache[i][j]기준 왼쪽 셀
+          }
+        }
+        console.log(cache);
+
+        return cache[m - 1][n - 1];
+      }
+
+      console.log(numOfPaths(3, 4));
+    </script>
+
+    <script>
+      function numOfPaths(m, n) {
+        var cache = Array(m)
+          .fill(0)
+          .map((v) => Array(n).fill(0));
+
+        for (var i = 0; i < m; i++) {
+          cache[i][0] = 1;
+        }
+
+        for (var j = 0; j < n; j++) {
+          cache[0][j] = 1;
+        }
+
+        for (var i = 1; i < m; i++) {
+          for (var j = 1; j < n; j++) {
+            cache[i][j] = cache[i - 1][j] + cache[i][j - 1];
+          }
+        }
+
+        console.log(cache);
+        return cache[m - 1][n - 1];
+      }
+
+      console.log(numOfPaths(3, 4));
+    </script>
+    <script>
+      function numOfPaths(m, n) {
+        var cache = Array(m)
+          .fill(1)
+          .map((v) => Array(n).fill(1));
+
+        for (var i = 1; i < m; i++) {
+          for (var j = 1; j < n; j++) {
+            cache[i][j] = cache[i - 1][j] + cache[i][j - 1];
+          }
+        }
+
+        console.log(cache);
+        return cache[m - 1][n - 1];
+      }
+
+      console.log(numOfPaths(3, 4));
+    </script>
+  </body>
+</html>

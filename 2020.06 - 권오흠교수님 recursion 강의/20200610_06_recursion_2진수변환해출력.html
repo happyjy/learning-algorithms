@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="demo"></div>
+    <script>
+      var arr = [];
+      function printInBinary(n) {
+        if (n < 2) {
+          arr.push(n);
+        } else {
+          printInBinary(n / 2);
+          arr.push(n % 2);
+        }
+      }
+
+      printInBinary(4);
+      debugger;
+      console.log(arr.join("").toString());
+
+      let temparr = [];
+      function binary(n) {
+        if (1 === n) {
+          temparr.push(n);
+        } else {
+          binary(n / 2);
+          temparr.push(n % 2);
+        }
+      }
+
+      binary(5);
+      console.log(temparr.join(""));
+    </script>
+  </body>
+</html>

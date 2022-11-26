@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="demo"></div>
+    <script>
+      var N = 8;
+
+      var maze = [
+        [0, 0, 0, 0, 0, 0, 0, 1],
+        [0, 1, 1, 0, 1, 1, 0, 1],
+        [0, 0, 0, 1, 0, 0, 0, 1],
+        [0, 1, 0, 0, 1, 1, 0, 0],
+        [0, 1, 1, 1, 0, 0, 1, 1],
+        [0, 1, 0, 0, 0, 1, 0, 1],
+        [0, 0, 0, 1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0, 1, 0, 0],
+      ];
+
+      var PATHWAY_COLOUR = 0;
+      var WALL_COLOUR = 1;
+      var BLOCKED_COLOUR = "*"; //visited이며 출구까지의 경로상에 있지 않음이 밝혀진 cell
+      var PATH_COLOUR = "@"; //visited이며 아직 출구로 가는 경로가 될 가능성이 있는 cell
+
+      function findMazePath(x, y) {
+        if (x < 0 || y < 0 || x >= N || y >= N) {
+          // #POINT1 미로 밖 여부 확인
+          return false;
+        } else if (maze[x][y] != PATHWAY_COLOUR) {
+          // #POINT2 길이 아닌경우(벽, 가본길, 막힌길)
+          return false;
+        } else if (x == N - 1 && y == N - 1) {
+          // #POINT3 출구
+          maze[x][y] = PATH_COLOUR;
+          return true;
+        } else {
+          // #POINT4 길찾기(재귀호출로 현재위치 기준 서,북,동,남 순으로 확인)
+          maze[x][y] = PATH_COLOUR;
+          if (
+            findMazePath(x - 1, y) || //서
+            findMazePath(x, y + 1) || //북
+            findMazePath(x + 1, y) || //동
+            findMazePath(x, y - 1) //남
+          ) {
+            return true;
+          }
+        }
+        // #POINT5 4방향 모두 꽝이면 출구까지 가는길은 없다
+        debugger;
+        maze[x][y] = BLOCKED_COLOUR; //dead end
+        return false;
+      }
+
+      function printMaze() {
+        maze.forEach((v) => {
+          console.log(v.toString());
+        });
+      }
+
+      printMaze();
+      console.log(findMazePath(0, 0));
+      printMaze();
+    </script>
+
+    <script>
+      var N = 8;
+
+      var maze = [
+        [0, 0, 0, 0, 0, 0, 0, 1],
+        [0, 1, 1, 0, 1, 1, 0, 1],
+        [0, 0, 0, 1, 0, 0, 0, 1],
+        [0, 1, 0, 0, 1, 1, 0, 0],
+        [0, 1, 1, 1, 0, 0, 1, 1],
+        [0, 1, 0, 0, 0, 1, 0, 1],
+        [0, 0, 0, 1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0, 1, 0, 0],
+      ];
+
+      var PATHWAY_COLOUR = 0;
+      var WALL_COLOUR = 1;
+      var BLOCKED_COLOUR = "*"; //visited이며 출구까지의 경로상에 있지 않음이 밝혀진 cell
+      var PATH_COLOUR = "@"; //visited이며 아직 출구로 가는 경로가 될 가능성이 있는 cell
+
+      function fmp(x, y) {
+        if (x < 0 || y < 0 || x >= N || y >= N) {
+          return false;
+        } else if (maze[x][y] != PATHWAY_COLOUR) {
+          // 길이 아닌경우
+          return false;
+        } else if (x == N - 1 && y == N - 1) {
+          // 출구
+          maze[x][y] = PATH_COLOUR;
+          return true;
+        } else {
+          maze[x][y] = PATH_COLOUR;
+          if (
+            fmp(x - 1, y) ||
+            fmp(x, y + 1) ||
+            fmp(x + 1, y) ||
+            fmp(x, y - 1)
+          ) {
+            return true;
+          }
+        }
+        maze[x][y] = BLOCKED_COLOUR;
+        return false;
+      }
+
+      console.log(findMazePath(0, 0));
+    </script>
+
+    <script>
+      var N = 8;
+
+      var maze = [
+        [0, 0, 0, 0, 0, 0, 0, 1],
+        [0, 1, 1, 0, 1, 1, 0, 1],
+        [0, 0, 0, 1, 0, 0, 0, 1],
+        [0, 1, 0, 0, 1, 1, 0, 0],
+        [0, 1, 1, 1, 0, 0, 1, 1],
+        [0, 1, 0, 0, 0, 1, 0, 1],
+        [0, 0, 0, 1, 0, 0, 0, 1],
+        [0, 1, 1, 1, 0, 1, 0, 0],
+      ];
+
+      var PATHWAY_COLOUR = 0;
+      var WALL_COLOUR = 1;
+      var BLOCKED_COLOUR = "*"; //visited이며 출구까지의 경로상에 있지 않음이 밝혀진 cell
+      var PATH_COLOUR = "@"; //visited이며 아직 출구로 가는 경로가 될 가능성이 있는 cell
+
+      function fmp(x, y) {
+        if (x < 0 || y < 0 || x >= N || y >= N) {
+          return false;
+        } else if (maze[x][y] !== PATHWAY_COLOUR) {
+          return false;
+        } else if (x == N - 1 && y == N - 1) {
+          // 출구
+          // maze[x][y] == PATH_COLOUR;
+          return true;
+        } else {
+          // 출구까지 가는 경로
+          if (
+            fmp(x - 1, y) ||
+            fmp(x, y + 1) ||
+            fmp(x + 1, y) ||
+            fmp(x, y - 1)
+          ) {
+            return true;
+          }
+          maze[x][y] == BLOCKED_COLOUR;
+        }
+      }
+
+      console.log(fmp(0, 0));
+    </script>
+  </body>
+</html>

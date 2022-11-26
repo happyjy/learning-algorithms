@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // # 최장 공통 부분 수열(longest common subsequence)(LCS)
+      //  * 문자열 내에서 왼쪽에서 오른쪽 방향으로 문자열 내에 들어 잇는 글자의 수열
+      //  * 반드시 연속적인 글자들로 구성될 필요 x
+      function lcs_length(str1, str2, m, n) {
+        var lcs_table = Array(m + 1)
+          .fill(0)
+          .map((v) => Array(n + 1).fill(0));
+
+        // lcs_table 첫번째 열, 첫번째 행을 0으로 채우는것 행략 위 코드에서 모든 요소에 0으로 초기화함.
+        // lcs_table 첫번째 열을 0으로 채운다.
+        // for (var i = 0; i < m; i++) {
+        //   lcs_table[i][0] = 0;
+        // }
+
+        // lcs_table 첫번째 행을 0으로 채운다.
+        // for (var j = 0; j < m; j++) {
+        //   lcs_table[0][j] = 0;
+        // }
+
+        // 배열의 나머지 셀을 채운다
+        for (var i = 1; i <= m; i++) {
+          for (var j = 1; j <= n; j++) {
+            if (str1[i - 1] === str2[j - 1]) {
+              lcs_table[i][j] = lcs_table[i - 1][j - 1] + 1;
+            } else {
+              lcs_table[i][j] = Math.max(
+                lcs_table[i - 1][j],
+                lcs_table[i][j - 1]
+              );
+            }
+          }
+        }
+
+        return lcs_table[m][n];
+      }
+
+      var str1 = "ABCD";
+      var str2 = "AEBD";
+      // var str1 = 'ACB';
+      // var str2 = 'ABC';
+      var m = str1.length;
+      var n = str2.length;
+
+      console.log(lcs_length(str1, str2, m, n));
+    </script>
+
+    <!-- 연습 -->
+    <script>
+      // var str1 = "ABCD";
+      // var str2 = "AEBD";
+      var str1 = "ACB";
+      var str2 = "ABC";
+
+      console.log(lcs_length(str1, str2));
+
+      function lcs_length(str1, str2, m = str1.length, n = str2.length) {
+        var Table = Array(m + 1)
+          .fill(0)
+          .map(() => Array(n + 1).fill(0));
+
+        for (var i = 1; i <= m; i++) {
+          for (var j = 1; j <= n; j++) {
+            if (str1[i - 1] === str2[j - 1]) {
+              Table[i][j] = 1 + Table[i - 1][j - 1];
+            } else {
+              Table[i][j] = Math.max(Table[i - 1][j], Table[i][j - 1]);
+            }
+          }
+        }
+
+        return Table[n][m];
+      }
+    </script>
+
+    <!-- 연습 -->
+    <!-- <script>
+      function lcs_length(str1, str2, m = str1.length, n = str2.length) {
+        var lcs_table = Array(m + 1)
+          .fill(0)
+          .map((v) => Array(n + 1).fill(0));
+
+        for (var i = 1; i <= m; i++) {
+          for (var j = 1; j <= n; j++) {
+            if (str1[i - 1] === str2[j - 1]) {
+              lcs_table[i][j] = lcs_table[i - 1][j - 1] + 1;
+            } else {
+              lcs_table[i][j] = Math.max(
+                lcs_table[i][j - 1],
+                lcs_table[i - 1][j]
+              );
+            }
+          }
+        }
+
+        return lcs_table[m][n];
+      }
+
+      var str1 = "ABCD";
+      var str2 = "AEBD";
+      // var str1 = 'ACB';
+      // var str2 = 'ABC';
+
+      console.log(lcs_length(str1, str2));
+    </script> -->
+  </body>
+</html>

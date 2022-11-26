@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <script>
+      const isPrime = (n) => {
+        if (n < 2) return false;
+        const sqrt = Math.sqrt(n);
+        for (let i = 2; i <= sqrt; i++) if (n % i === 0) return false;
+        return true;
+      };
+
+      /*
+        number  : type integer
+        numbers : type array
+        return  : type array
+      */
+      // 조합 할 수 있는 모든 숫자 조합(permutation(순열) 아님)
+      const makeAllNumber = (number = null, ...numbers) => {
+        console.log({ number, numbers });
+        if (number === null) return [];
+        if (numbers.length === 0) return [number];
+
+        let arr = [number]; // arr : 조합된 숫자
+        for (const idx in numbers) {
+          // * rest : numbers에 idx 요소를 제외한 나머지 index 요소
+          const rest = numbers.filter((v, i) => i !== parseInt(idx, 10));
+          const idxNum = numbers[idx];
+
+          // * number, idxNum type : string ""+"1" = "1"/ "1" + "2" = "12"
+          //   - parseInt("1") -> 1
+          // * rest가 빈배열 일때 까지 '재귀함수'반복 (위 filter return type은 array)
+
+          //STUDY2 - 모든 문자열 찾는 방법
+          console.log({ idx: 1, arr, number, idxNum, rest });
+          arr = [...arr, ...makeAllNumber(number + idxNum, ...rest)];
+          console.log({ idx: 2, arr, number, idxNum, rest });
+          arr = [...arr, ...makeAllNumber(number + idxNum, ...rest)];
+          console.log({ dix: 3, arr, number, idxNum, rest });
+          arr = [...new Set(arr)];
+        }
+
+        return arr;
+      };
+
+      function solutions(numbers) {
+        numbers = numbers.split("");
+
+        //STUDY1 - string type을 array type으로 변경하는 방법
+        let makedNumbers = makeAllNumber("", ...numbers)
+          .filter((v) => v !== "")
+          .map((v) => parseInt(v));
+        //STUDY3 - 중복숫자제거
+        makedNumbers = [...new Set(makedNumbers)];
+        console.log("#모든숫자: ", makedNumbers);
+
+        return makedNumbers.map(isPrime).filter((v) => v === true).length;
+      }
+
+      console.log(solutions("123"));
+    </script>
+  </body>
+</html>

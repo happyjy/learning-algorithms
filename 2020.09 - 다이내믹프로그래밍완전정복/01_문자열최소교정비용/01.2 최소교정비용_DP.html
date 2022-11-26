@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      /*
+          # 최소 교정 비용 문제
+
+          * 두 단어의 한글자씩 바꿀수 있는 방법: 삽입, 삭제, 치환
+          * 두 단어간의 교정 비용은 한 단어에서 다른 단어로 바꾸는데 필요한 글자 연산의 횟수로 정의
+
+
+          +: 추가, @: 교환
+
+          S     U N D A Y
+            + +   @
+          S A T U R D A Y
+
+      */
+
+      function editDistance(str1, str2, m = str1.length, n = str2.length) {
+        var EditD = [...Array(m + 1)].map((v) => Array(n + 1));
+
+        // EditD의 첫번째 요소: str2
+        // EditD의 두번째 요소: str1
+
+        // editD[0]의미: str1은 빈문자열
+        // editD[0][j]의미: 빈문자열 str1이 str2와 같게 하기 위한 최소 교정비용
+        // * "2중 for문 이후 EditD 배열(상향식 접근방법)" 목차 도식화 확인하기
+        for (var j = 0; j <= n; j++) {
+          EditD[0][j] = j;
+        }
+
+        // editD[i][0]의미: 빈문자열 str2가 str1과 같게 하기 위한 최소 교정비용
+        // * "2중 for문 이후 EditD 배열(상향식 접근방법)" 목차 도식화 확인하기
+        for (var i = 0; i <= m; i++) {
+          EditD[i][0] = i;
+        }
+
+        debugger;
+        for (var i = 1; i <= m; i++) {
+          for (var j = 1; j <= n; j++) {
+            // str1, str2 두 문자열의 첫번째 문자 비교
+            if (str1[i - 1] === str2[j - 1]) {
+              // 같으면 이전의 최소비교값 왼쪽,위 셀(대각선)값을 대입
+              EditD[i][j] = EditD[i - 1][j - 1];
+            } else {
+              EditD[i][j] =
+                Math.min(
+                  EditD[i][j - 1], // 왼쪽 셀
+                  EditD[i - 1][j], // 위 셀
+                  EditD[i - 1][j - 1] // 왼쪽,위셀(대각선)
+                ) + 1;
+            }
+          }
+        }
+
+        return EditD[m][n];
+      }
+
+      var str1 = "SUNDAY";
+      var str2 = "SATURDAY";
+
+      // var str = "CAT";
+      // var str2 = "DOG";
+
+      // var str = "CAT";
+      // var str2 = "CAR";
+
+      console.log(editDistance(str1, str2));
+    </script>
+
+    <script>
+      function editDistance(str1, str2, m = str1.length, n = str2.length) {
+        // 최소교정비용 구하는 테이블 생성(DP, 상향식 방법)
+        var EditD = [...Array(m + 1)].map((v) => Array(n + 1));
+
+        for (var i = 0; i <= m; i++) {
+          EditD[i][0] = i;
+        }
+        for (var j = 0; j <= n; j++) {
+          EditD[0][j] = j;
+        }
+
+        for (var i = 1; i <= m; i++) {
+          for (var j = 1; j <= n; j++) {
+            if (str1[i - 1] == str2[j - 1]) {
+              EditD[i][j] = EditD[i - 1][j - 1];
+            } else {
+              EditD[i][j] =
+                Math.min(
+                  EditD[i][j - 1],
+                  EditD[i - 1][j - 1],
+                  EditD[i - 1][j]
+                ) + 1;
+            }
+          }
+        }
+        return EditD[m][n];
+      }
+      var str1 = "SUNDAY";
+      var str2 = "SATURDAY";
+      console.log(editDistance(str1, str2));
+    </script>
+  </body>
+</html>

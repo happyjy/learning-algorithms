@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      // # 거스름돈 최적화[탐욕알고리즘]
+
+      // # 메커니즘
+      //  * resultArr 배열에 각 요소에 1원 단위로 최소 거스름돈을 계산.
+      //  * resultArr[거스름돈] = 최소 거스름돈;
+
+      // coin = [50, 10, 5, 1]
+
+      // # 귀납적 추리 (작게 생각해보기)
+      //  * 1일때
+      //      - temp = result[1 - coin[3]] = 0;
+      //        temp = result[1 - 1] = 0;
+
+      //  * 65일때
+      //      - temp = result[65 - coin[0]] = 15;
+      //        temp = result[65 - 50] = 15;
+
+      //      - result[15] => result[15 - coin[1](10)] = 5;
+      //        result[15] => result[15 - 10] = 5;
+
+      //      - result[5] => result[5 - coin[0]] = 0;
+      //        result[5] => result[5 - 5] = 0;
+
+      function minCoins(coin, N, C) {
+        // # POINT1
+        //  * resultArray[i]에는 i원을 거슬러줄 때 필요한 최소 동전의 개수를 저장
+        //  * 마지막에 resultArr[C]를 반환합니다.
+
+        // 최솟값을 구하기 위해 resultArr의 모든 값을 매우 큰 값으로 초기화
+        var maxNum = Number.MAX_SAFE_INTEGER;
+        var resultArr = Array(C + 1).fill(maxNum);
+
+        // C = 0일 때
+        resultArr[0] = 0;
+        /*
+         * C: 거슬러줄 금액
+         * N: 동전 종류
+         */
+        for (var i = 1; i <= C; i++) {
+          for (var j = 0; j < N; j++) {
+            // # POINT2
+            // 현재 구하려는 금액보다 같거나, 작은 액면가의 동전에 대해서만 검사
+            if (coin[j] <= i) {
+              // i: 현재 거슬러야할 "거스름돈"
+              // coin[j]: 가지고 있는 "코인종류"
+              // resultArr[i - coin[j]]: 거슬러야할 거스름돈에서 가지고 있는 코인을 빼고난뒤 "코인갯수"
+              var temp = resultArr[i - coin[j]];
+
+              // # POINT3 - 거슬러야할 "거스름돈"을 동전으로줄때 최소 동전을 구하기 위한 로직
+              // # POINT4 - coin 배열이 내림차 순이어야지 가능한 알고리즘
+              if (temp != maxNum && temp + 1 < resultArr[i]) {
+                resultArr[i] = temp + 1;
+              }
+            }
+          }
+        }
+
+        return resultArr[C];
+      }
+
+      var coin = [50, 10, 5, 1];
+      var N = coin.length;
+      var C = 106;
+
+      console.log(minCoins(coin, N, C));
+    </script>
+
+    <script>
+      function minCoins(coin, N = coin.length, C) {
+        var maxNum = Number.MAX_SAFE_INTEGER;
+        var resultArr = Array(C + 1).fill(maxNum);
+
+        resultArr[0] = 0;
+
+        for (var i = 0; i <= C; i++) {
+          for (var j = 0; j < N; j++) {
+            if (coin[j] <= i) {
+              var temp = resultArr[i - coin[j]];
+
+              if (temp < resultArr[i]) {
+                resultArr[i] = temp + 1;
+              }
+            }
+          }
+        }
+
+        return resultArr[C];
+      }
+
+      var coin = [50, 10, 5, 1];
+      var N = coin.length;
+      var C = 106;
+
+      console.log(minCoins(coin, N, C));
+    </script>
+
+    <script>
+      function minCoins(coin, N = coin.length, C) {
+        var maxNum = Number.MAX_SAFE_INTEGER;
+        var resultArr = Array(C + 1).fill(maxNum);
+
+        resultArr[0] = 0;
+
+        for (var i = 0; i <= C; i++) {
+          for (let j = 0; j < N; j++) {
+            if (coin[j] <= i) {
+              var temp = resultArr[i - coin[j]];
+
+              if (temp != maxNum && temp + 1 < resultArr[i]) {
+                resultArr[i] = temp + 1;
+              }
+            }
+          }
+        }
+        return resultArr[C];
+      }
+
+      var coin = [50, 10, 5, 1];
+      var N = coin.length;
+      var C = 106;
+
+      console.log(minCoins(coin, N, C));
+    </script>
+  </body>
+</html>
