@@ -9,41 +9,41 @@
   <body>
     <script>
       /*
-      # N-Queens
-        * NxN의 체스판에 N개의 퀸을 서로 공격하지 않게 놓는 방법 혹은 그 수를 구하는 문제
+        # N-Queens
+          * NxN의 체스판에 N개의 퀸을 서로 공격하지 않게 놓는 방법 혹은 그 수를 구하는 문제
 
-        * https://www.youtube.com/watch?v=xKGbWC-DPT4&list=PL52K_8WQO5oUuH06MLOrah4h05TZ4n38l&index=6
-        * https://dheldh77.tistory.com/373
-        * https://dheldh77.tistory.com/154
+          * https://www.youtube.com/watch?v=xKGbWC-DPT4&list=PL52K_8WQO5oUuH06MLOrah4h05TZ4n38l&index=6
+          * https://dheldh77.tistory.com/373
+          * https://dheldh77.tistory.com/154
 
-      * 1row - 1Queen
-      * Backtracking - 결정내려가다 막다른길에 도달하면 가장 최근에 내렸던 결정을 취소하고 다른 선택을 한다.
-      * 상태공간 트리
+        * 1row - 1Queen
+        * Backtracking - 결정내려가다 막다른길에 도달하면 가장 최근에 내렸던 결정을 취소하고 다른 선택을 한다.
+        * 상태공간 트리
 
 
-      * p86
-        - 매개변수: 현재 트리의 어떤 노드에 있는지를 정해야한다.
-        - queens 함수에 도달: 어떤 노드에 도달한 순간
-        - 함수안 로직: 도달한 노드에서 어떤 작업을 해줘야하는지를 작성하면 된다.(다음 노드로 가도 되는지 여부(queen끼리 충돌하는지.)
-          - non-promising: 다음 노드로 가지 않는다.(queen끼리 충돌)
-          - success
-          - visit children recursivbly
+        * p86
+          - 매개변수: 현재 트리의 어떤 노드에 있는지를 정해야한다.
+          - queens 함수에 도달: 어떤 노드에 도달한 순간
+          - 함수안 로직: 도달한 노드에서 어떤 작업을 해줘야하는지를 작성하면 된다.(다음 노드로 가도 되는지 여부(queen끼리 충돌하는지.)
+            - non-promising: 다음 노드로 가지 않는다.(queen끼리 충돌)
+            - success
+            - visit children recursivbly
 
-      * p87
-        - level: node의 레벨 (p.95 참고)
-        - cols[i]: 첫번째 로우에  queens가 "열번호"
-          cols[i]: 두번째 로우에 2번위치 queens
+        * p87
+          - level: node의 레벨 (p.95 참고)
+          - cols[i]: 첫번째 로우에  queens가 "열번호"
+            cols[i]: 두번째 로우에 2번위치 queens
 
-      * p91
-        - 자식노드를 recursive하게 접근/선택 가능여부 로직
+        * p91
+          - 자식노드를 recursive하게 접근/선택 가능여부 로직
 
-      * p92
-        - promising Test
+        * p92
+          - promising Test
 
-      * P93
-        - queen끼리 부딪힐 케이스 처리
-        - 같은열, 같은 대각선
-    */
+        * P93
+          - queen끼리 부딪힐 케이스 처리
+          - 같은열, 같은 대각선
+      */
     </script>
 
     <!-- 연습 -->

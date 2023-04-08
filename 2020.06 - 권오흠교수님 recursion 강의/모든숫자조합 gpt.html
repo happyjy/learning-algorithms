@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <script>
+      function findAllPermutations(digits) {
+        let results = [];
+
+        function findPermutations(current, digitsLeft) {
+          if (digitsLeft === 0) {
+            results.push(parseInt(current));
+            return;
+          }
+
+          for (let i = 0; i < digits.length; i++) {
+            findPermutations(current + digits[i], digitsLeft - 1);
+          }
+        }
+
+        for (let i = 1; i <= digits.length; i++) {
+          findPermutations("", i);
+        }
+
+        return results;
+      }
+
+      console.log(findAllPermutations(["1", "2", "3"])); // ["1", "2", "3", "12", "13", "21", "23", "31", "32", "123", "132", "213", "231", "312", "321"]
+    </script>
+  </body>
+</html>

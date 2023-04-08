@@ -8,19 +8,32 @@
   </head>
   <body>
     <script>
+      /*
+          * permutation: 순열
+            - x, y, z로 가능한 순열은 xyz, xzy, yxz, yzx, zxy, zyx이다.
+            - 1, 2, 3로 가능한 순열은 123, 132/ 213, 231/ 312, 321이다.
+
+          * 개수
+            - 3!(3 * 2 * 1) -> 6개!
+
+
+          * 강의
+            - https://www.youtube.com/watch?v=MjW10t9ppok&list=PL52K_8WQO5oUuH06MLOrah4h05TZ4n38l&index=8
+
+       */
       var arr = [];
 
-      function solution(str, point, length) {
-        str = str.toString();
-
-        if (point == length) {
+      function solution(str, point) {
+        if (point == str.length - 1) {
           // highlight-line // POINT3
           arr.push(str);
+          console.log("str, point, str.length: ", str, point);
         } else {
-          for (var cursor = point; cursor <= length; cursor++) {
-            str = swap(str, point, cursor); // highlight-line //POINT2
-            solution(str, point + 1, length); // highlight-line //POINT2
-            str = swap(str, point, cursor); // highlight-line //POINT3
+          for (var i = point; i < str.length; i++) {
+            console.log("str, point, str.length: ", str, { point, i });
+            var str = swap(str, point, i); // highlight-line //POINT2
+            solution(str, point + 1); // highlight-line //POINT2
+            str = swap(str, point, i); // highlight-line //POINT3
           }
         }
       }
@@ -33,12 +46,68 @@
       }
 
       var str = "ABC";
-      solution(str, 0, str.length - 1);
+      solution(str, 0);
 
       console.log(arr);
     </script>
 
     <script>
+      // 위 코드를 chat gpt로 리뷰 받은 코드
+      function findAllPermutations(str) {
+        var permutations = [];
+        generatePermutations(str, 0);
+        return permutations;
+
+        // generatePermutations 함수: 문자열의 모든 순열을 생성하는 함수
+        function generatePermutations(str, currentIndex) {
+          if (currentIndex === str.length - 1) {
+            permutations.push(str);
+          } else {
+            for (let i = currentIndex; i < str.length; i++) {
+              var swapped = swapCharacters(str, currentIndex, i);
+              generatePermutations(swapped, currentIndex + 1);
+            }
+          }
+        }
+        // swapCharacters 함수: 문자열 내 두 글자의 위치를 바꾸는 함수
+        function swapCharacters(str, i, j) {
+          var chars = str.split("");
+          [chars[i], chars[j]] = [chars[j], chars[i]];
+          return chars.join("");
+        }
+      }
+
+      var str = "ABC";
+      var permutations = findAllPermutations(str);
+      console.log(permutations);
+    </script>
+
+    <script>
+      function findAllPermutations(arr) {
+        var permutations = [];
+
+        generatePermutations(arr, 0);
+
+        return permutations;
+
+        function generatePermutations(arr, currentIndex) {
+          if (currentIndex === arr.length - 1) {
+            permutations.push([...arr]);
+          } else {
+            for (let i = currentIndex; i < arr.length; i++) {
+              [arr[currentIndex], arr[i]] = [arr[i], arr[currentIndex]];
+              generatePermutations(arr, currentIndex + 1);
+              [arr[currentIndex], arr[i]] = [arr[i], arr[currentIndex]];
+            }
+          }
+        }
+      }
+
+      var arr = [1, 2, 3];
+      var permutations = findAllPermutations(arr);
+      console.log(permutations);
+    </script>
+    <!-- <script>
       var str = "ABCD";
       var result = [];
       solution(str, 0, str.length - 1);
@@ -48,10 +117,10 @@
         if (b === e) {
           result.push(str);
         } else {
-          for (let i = b; i <= e; i++) {
-            str = swap(str, b, i);
+          for (let cursor = b; cursor <= e; cursor++) {
+            str = swap(str, b, cursor);
             solution(str, b + 1, e);
-            str = swap(str, b, i);
+            str = swap(str, b, cursor);
           }
         }
       }
@@ -81,11 +150,11 @@
         }
 
         function swap(str, cursor, i) {
-          const temp = [...str];
+          var temp = [...str];
           [temp[cursor], temp[i]] = [temp[i], temp[cursor]];
           return temp.join("");
         }
       }
-    </script>
+    </script> -->
   </body>
 </html>
